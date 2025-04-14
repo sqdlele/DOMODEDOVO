@@ -19573,3 +19573,164 @@ INFO 2025-04-14 21:57:16,262 autoreload 7604 5344 Watching for file changes with
 INFO 2025-04-14 21:57:27,094 basehttp 7604 18592 "GET /chat/get_messages/ HTTP/1.1" 200 16
 INFO 2025-04-14 21:57:27,096 basehttp 7604 17628 "GET /chat/get_messages/ HTTP/1.1" 200 16
 INFO 2025-04-14 21:57:32,908 autoreload 7604 5344 D:\cursovaya\proect7\proect7\settings.py changed, reloading.
+INFO 2025-04-14 23:53:08,040 autoreload 21156 19584 Watching for file changes with StatReloader
+ERROR 2025-04-14 23:53:09,257 exception 21156 15892 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "D:\cursovaya\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\cursovaya\venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+  File "D:\cursovaya\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "D:\cursovaya\venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING 2025-04-14 23:53:09,276 log 21156 15892 Bad Request: /
+WARNING 2025-04-14 23:53:09,277 basehttp 21156 15892 "GET / HTTP/1.1" 400 73481
+ERROR 2025-04-14 23:53:27,087 exception 21156 21636 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "D:\cursovaya\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\cursovaya\venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+  File "D:\cursovaya\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "D:\cursovaya\venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2025-04-14 23:53:27,089 exception 21156 19024 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "D:\cursovaya\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\cursovaya\venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+  File "D:\cursovaya\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "D:\cursovaya\venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING 2025-04-14 23:53:27,109 log 21156 21636 Bad Request: /chat/get_messages/
+WARNING 2025-04-14 23:53:27,117 log 21156 19024 Bad Request: /chat/get_messages/
+WARNING 2025-04-14 23:53:27,118 basehttp 21156 21636 "GET /chat/get_messages/ HTTP/1.1" 400 73701
+WARNING 2025-04-14 23:53:27,118 basehttp 21156 19024 "GET /chat/get_messages/ HTTP/1.1" 400 73701
+INFO 2025-04-14 23:53:29,797 autoreload 21156 19584 D:\cursovaya\proect7\proect7\settings.py changed, reloading.
+INFO 2025-04-14 23:54:03,900 autoreload 19180 21132 Watching for file changes with StatReloader
+INFO 2025-04-14 23:54:04,915 basehttp 19180 8196 "GET / HTTP/1.1" 200 40177
+INFO 2025-04-14 23:54:05,048 basehttp 19180 8196 "GET /static/style.css HTTP/1.1" 304 0
+INFO 2025-04-14 23:54:05,054 basehttp 19180 8196 "GET /static/css/news.css HTTP/1.1" 304 0
+INFO 2025-04-14 23:54:05,082 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:08,078 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:11,094 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:14,086 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:17,093 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:20,093 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:23,094 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:26,090 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:27,097 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:27,097 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:29,081 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:32,085 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:35,090 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:38,093 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:41,088 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:44,091 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:47,095 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:50,096 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:53,087 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:56,091 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:54:59,093 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:55:02,081 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:55:05,082 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:55:08,091 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:55:11,084 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:55:27,089 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:55:27,090 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:55:27,096 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:56:27,097 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:56:27,098 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:56:27,102 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:57:27,096 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:57:27,102 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:57:27,115 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:58:27,090 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:58:27,091 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:58:27,091 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:59:27,104 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:59:27,104 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-14 23:59:27,104 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:00:27,098 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:00:27,098 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:00:27,103 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:01:27,104 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:01:27,104 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:01:27,108 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:02:27,095 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:02:27,096 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:02:27,096 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:03:27,101 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:03:27,105 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:03:27,107 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:04:27,096 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:04:27,099 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:04:27,099 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:05:27,099 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:05:27,099 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:05:27,099 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:06:27,103 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:06:27,103 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:06:27,104 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:07:27,094 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:07:27,094 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:07:27,094 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:08:27,102 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:08:27,105 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:08:27,122 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:09:27,092 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:09:27,092 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:09:27,092 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:10:27,097 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:10:27,097 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:10:27,101 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:11:27,096 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:11:27,097 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:11:27,102 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:12:27,086 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:12:27,088 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:12:27,096 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:13:27,090 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:13:27,090 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:13:27,090 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:14:27,095 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:14:27,097 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:14:27,097 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:15:27,092 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:15:27,092 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:15:27,094 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:16:27,093 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:16:27,094 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:16:27,096 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:17:27,094 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:17:27,095 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:17:27,100 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:18:27,101 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:18:27,102 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:18:27,117 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:19:27,094 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:19:27,095 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:19:27,096 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:20:27,095 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:20:27,097 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:20:27,105 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:21:27,088 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:21:27,091 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:21:27,092 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:22:27,091 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:22:27,091 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:22:27,093 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:23:27,099 basehttp 19180 22228 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:23:27,102 basehttp 19180 15096 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:23:27,102 basehttp 19180 8196 "GET /chat/get_messages/ HTTP/1.1" 200 16
+INFO 2025-04-15 00:23:43,051 autoreload 19180 21132 D:\cursovaya\proect7\app\views.py changed, reloading.
+INFO 2025-04-15 00:23:43,818 autoreload 20444 18176 Watching for file changes with StatReloader
+INFO 2025-04-15 00:23:50,200 autoreload 20444 18176 D:\cursovaya\proect7\app\views.py changed, reloading.
+INFO 2025-04-15 00:23:50,892 autoreload 17096 19200 Watching for file changes with StatReloader

@@ -171,30 +171,36 @@ def appointment_success(request):
     })
         
 def services_view(request):
-    # Получаем поисковый запрос и приводим к нижнему регистру
-    search_query = request.GET.get('search', '').strip().lower()
+    # Получаем поисковый запрос
+    search_query = request.GET.get('search', '').strip()
     services = ServiceType.objects.all()
     
     # Если есть поисковый запрос
     if search_query:
-        services = services.filter(
-            Q(name__icontains=search_query)
-        ).distinct()
+        # Разбиваем запрос на отдельные слова
+        search_words = search_query.split()
+        # Создаем пустой Q-объект
+        query = Q()
+        
+        # Добавляем условие для каждого слова
+        for word in search_words:
+            query |= Q(name__icontains=word)
+        
+        # Применяем фильтр
+        services = services.filter(query).distinct()
     
+    # Группируем по категориям
     services_by_category = {}
     for service in services.order_by('category'):
         if service.category not in services_by_category:
             services_by_category[service.category] = []
         services_by_category[service.category].append(service)
     
-    
-    
-    return render(request, 'services/services.html', context = {
+    return render(request, 'services/services.html', {
         'services_by_category': services_by_category,
         'query': search_query,
         'title': f'Поиск: {search_query}' if search_query else 'Наши услуги'
-    }
-)
+    })
 
 def services_category_view(request, category):
     services = ServiceType.objects.filter(category=category).order_by('name')
