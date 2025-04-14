@@ -1,0 +1,290 @@
+
+<div class="chat-panel" id="chatPanel">
+    <div class="chat-header">
+        <h3>Чат с поддержкой</h3>
+        <button class="chat-close" id="chatCloseBtn">&times;</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+        <!-- Приветственное сообщение -->
+        <div class="message received welcome-message">
+            <div class="message-content">
+                Здравствуйте! Я буду рад помочь вам. Пожалуйста, опишите ваш вопрос.
+            </div>
+            <div class="message-time">{{ now|time:"H:i" }}</div>
+        </div>
+    </div>
+    <div class="chat-input">
+        <form id="chatForm" method="post">
+            {% csrf_token %}
+            <input type="text" 
+                   id="messageInput" 
+                   name="message" 
+                   placeholder="Введите сообщение..." 
+                   autocomplete="off">
+            <button type="submit">
+                <span class="send-icon">➤</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<style>
+.chat-panel {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 9999;
+}
+
+.chat-header {
+    padding: 15px;
+    background: rgb(219, 168, 0);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-header h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: #f8f9fa;
+}
+
+/* Стили сообщений */
+.message {
+    margin-bottom: 15px;
+    max-width: 80%;
+    clear: both;
+}
+
+/* Сообщения поддержки (слева) */
+.message.received {
+    float: left;
+}
+
+.message.received .message-content {
+    background: #f0f0f0;
+    color: #333;
+    border-radius: 15px 15px 15px 0;
+}
+
+/* Сообщения пользователя (справа) */
+.message.sent {
+    float: right;
+}
+
+.message.sent .message-content {
+    background: rgb(219, 168, 0);
+    color: white;
+    border-radius: 15px 15px 0 15px;
+}
+
+.welcome-message .message-content {
+    background: #e3f2fd ;
+    color:rgb(0, 0, 0) ;
+}
+
+.message-content {
+    padding: 10px 15px;
+    word-wrap: break-word;
+}
+
+.message-time {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+    padding: 0 5px;
+}
+
+.message-status {
+    font-size: 12px;
+    color: #999;
+}
+
+.chat-input {
+    padding: 15px;
+    background: white;
+    border-top: 1px solid #eee;
+}
+
+.chat-input form {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+}
+
+.chat-input button {
+    background: rgb(219, 168, 0);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+.chat-input button:hover {
+    background: rgb(190, 146, 0);
+}
+
+
+
+/* Очистка для плавающих элементов */
+.chat-messages::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatPanel = document.getElementById('chatPanel');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatForm = document.getElementById('chatForm');
+        const messageInput = document.getElementById('messageInput');
+        let userScrolled = false;
+    
+        // Отслеживаем прокрутку
+        chatMessages.addEventListener('scroll', function() {
+            // Проверяем, не в самом ли низу чат
+            const isAtBottom = Math.abs(
+                chatMessages.scrollHeight - chatMessages.clientHeight - chatMessages.scrollTop
+            ) < 10;
+            
+            userScrolled = !isAtBottom;
+        });
+    
+        // Отправка сообщения
+        chatForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const message = messageInput.value.trim();
+            
+            if (!message) return;
+    
+            const formData = new FormData(this);
+    
+            fetch('{% url "chat:chat" %}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Очищаем поле ввода
+                    messageInput.value = '';
+                    
+                    // Добавляем сообщение в чат
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'message sent';
+                    messageDiv.innerHTML = `
+                        <div class="message-content">${message}</div>
+                        <div class="message-time">${data.timestamp}</div>
+                    `;
+                    chatMessages.appendChild(messageDiv);
+                    
+                    // После отправки всегда прокручиваем вниз
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    userScrolled = false;
+                }
+            })
+            .catch(error => console.error('Ошибка отправки:', error));
+        });
+    
+        // Обработчики открытия/закрытия чата
+        window.openChat = function() {
+            chatPanel.style.display = 'flex';
+            messageInput.focus();
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            userScrolled = false;
+        };
+    
+        window.closeChat = function() {
+            chatPanel.style.display = 'none';
+        };
+    
+        document.getElementById('chatCloseBtn').onclick = closeChat;
+    
+        // Обновление сообщений
+        function updateMessages() {
+            fetch('{% url "chat:get_messages" %}')
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.messages || !data.messages.length) return;
+    
+                    const oldScrollTop = chatMessages.scrollTop;
+                    const wasAtBottom = !userScrolled;
+    
+                    chatMessages.innerHTML = '';
+                    
+                    // Добавляем приветственное сообщение
+                    const welcomeMessage = document.createElement('div');
+                    welcomeMessage.className = 'message received welcome-message';
+                    welcomeMessage.innerHTML = `
+                        <div class="message-content">
+                            Здравствуйте! Я буду рад помочь вам. Пожалуйста, опишите ваш вопрос.
+                        </div>
+                        <div class="message-time">${new Date().toLocaleTimeString('ru-RU', {
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        })}</div>
+                    `;
+                    chatMessages.appendChild(welcomeMessage);
+                    
+                    // Добавляем сообщения
+                    data.messages.forEach(msg => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = `message ${msg.is_sender ? 'sent' : 'received'}`;
+                        messageDiv.innerHTML = `
+                            <div class="message-content">${msg.content}</div>
+                            <div class="message-time">${msg.timestamp}</div>
+                        `;
+                        chatMessages.appendChild(messageDiv);
+                    });
+    
+                    // Восстанавливаем прокрутку
+                    if (wasAtBottom) {
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    } else {
+                        chatMessages.scrollTop = oldScrollTop;
+                    }
+                })
+                .catch(error => console.error('Ошибка обновления:', error));
+        }
+    
+        // Запускаем обновление каждые 3 секунды
+        setInterval(updateMessages, 3000);
+    
+        // Начальная загрузка сообщений
+        updateMessages();
+    });
+    </script>

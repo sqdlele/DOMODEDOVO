@@ -1,0 +1,135 @@
+{% extends "services/service_base.html" %}
+
+{% block content %}
+<div class="services-container">
+    <div class="search-container">
+        <input type="text" 
+               id="searchInput"
+               class="search-input"
+               placeholder="Поиск услуг..." 
+               value="{{ query|default:'' }}"
+               autocomplete="off">
+    </div>
+
+    <div id="searchResults">
+
+        <div class="services-header">
+        <h2>{% if current_category %}{{ current_category }}{% else %}Наши услуги{% endif %}</h2>
+        <p class="service-description">
+            {% if current_category %}
+                {% if current_category == 'Ремонт' %}
+                    Профессиональный ремонт автомобилей любой сложности
+                {% elif current_category == 'Диагностика' %}
+                    Комплексная диагностика всех систем автомобиля
+                {% elif current_category == 'ТО' %}
+                    Техническое обслуживание автомобилей всех марок
+                {% endif %}
+            {% else %}
+                Мы предлагаем широкий спектр услуг по обслуживанию и ремонту автомобилей
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="services-categories">
+        {% for category, services in services_by_category.items %}
+            <div class="category-section" id="{{ category|lower }}">
+                <h2 class="category-title">{{ category }}</h2>
+                <div class="services-grid">
+                    {% for service in services %}
+                        <div class="service-card" id="{{ service.name|slugify }}">
+                            {% if service.image %}
+                                <div class="service-image" style="background-image: url('{{ service.image.url }}')"></div>
+                            {% endif %}
+                            <div class="service-content">
+                                <h3>{{ service.name }}</h3>
+                                <p>{{ service.description }}</p>
+                                <div class="service-footer">
+                                    <div class="service-price">{{ service.price }} ₽</div>
+                                    <form action="{% url 'make_appointment' %}" method="get">
+                                        <input type="hidden" name="service_id" value="{{ service.id }}">
+                                        <button type="submit" class="book-btn">Записаться</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+
+<script>
+let timer;
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+
+searchInput.addEventListener('input', function(e) {
+    clearTimeout(timer);
+    
+    // Добавляем небольшую задержку перед отправкой запроса
+    timer = setTimeout(() => {
+        const query = e.target.value.trim();
+        
+        // Создаем URL с параметром поиска
+        const url = new URL(window.location.href);
+        url.searchParams.set('search', query);
+        
+        // Отправляем AJAX запрос
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                // Создаем временный элемент для парсинга HTML
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Обновляем только содержимое результатов поиска
+                const newResults = doc.getElementById('searchResults');
+                if (newResults) {
+                    searchResults.innerHTML = newResults.innerHTML;
+                }
+            })
+            .catch(error => console.error('Ошибка:', error));
+    }, 300); // Задержка в 300 мс
+});
+</script>
+
+<style>
+.search-container {
+    margin: 20px auto;
+    max-width: 600px;
+    padding: 0 15px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #4a90e2;
+}
+
+/* Добавляем анимацию для плавного появления результатов */
+.services-categories {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+{% endblock %}

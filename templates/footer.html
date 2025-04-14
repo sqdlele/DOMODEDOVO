@@ -1,0 +1,51 @@
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>DOMODEDOVO</h4>
+            <p class="footer-description">Профессиональный автосервис с полным спектром услуг по ремонту и обслуживанию автомобилей в Ижевске</p>
+            <div class="footer-social">
+                <a href="#" class="social-icon"><i class="fab fa-vk"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-telegram"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h4>Услуги</h4>
+            <ul class="footer-links">
+                <li><a href="{% url 'services_category' 'Ремонт' %}">Все услуги ремонта</a></li>
+                <li><a href="{% url 'services_category' 'Диагностика' %}">Все услуги диагностики</a></li>
+                <li><a href="{% url 'services_category' 'ТО' %}">Все услуги ТО</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Навигация</h4>
+            <ul class="footer-links">
+                <li><a href="{% url 'home' %}#news">Новости</a></li>
+                <li><a href="{% url 'home' %}#onas">О нас</a></li>
+                <li><a href="{% url 'home' %}#contact">Контакты</a></li>
+                <li><a href="{% url 'home' %}#news">Акции</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Контакты</h4>
+            <ul class="footer-contacts">
+                <li><i class="fas fa-map-marker-alt"></i> г. Ижевск, ул. Автозаводская, 30</li>
+                <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
+                <li><i class="fas fa-envelope"></i> info@domodedovo-auto.ru</li>
+                <li><i class="fas fa-clock"></i> Пн-Пт: 8:00 - 22:00</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="footer-bottom-content">
+            <p>&copy; 2024 Автосервис DOMODEDOVO. Все права защищены.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Политика конфиденциальности</a>
+                <a href="#">Пользовательское соглашение</a>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,30 @@
+{% extends 'header.html' %}
+{% load static %}
+
+{% block content %}
+<div class="management-container">
+    <h2 class="management-title">Удаление новости</h2>
+    
+    <div class="form-card">
+        <div class="delete-confirmation">
+            <h4>Вы действительно хотите удалить эту новость?</h4>
+            <div class="news-preview">
+                <h3>{{ news_item.title }}</h3>
+                {% if news_item.image %}
+                    <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}" style="max-width: 200px;">
+                {% endif %}
+                <p>{{ news_item.content }}</p>
+                <div class="news-date">{{ news_item.date|date:"d.m.Y" }}</div>
+            </div>
+            
+            <form method="post" class="delete-form">
+                {% csrf_token %}
+                <div class="form-actions">
+                    <button type="submit" class="btn-delete">Удалить</button>
+                    <a href="{% url 'manage_news' %}" class="btn-cancel">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

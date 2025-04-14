@@ -1,0 +1,37 @@
+{% extends 'header.html' %}
+{% load static %}
+
+{% block content %}
+<div class="management-container">
+    <h2 class="management-title">Редактирование новости</h2>
+    
+    <div class="form-card">
+        <form method="post" enctype="multipart/form-data" class="management-form">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group1">
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="error-message">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+                    {% if field.name == 'image' and news_item.image %}
+                        <div class="current-image">
+                            <p>Текущее изображение:</p>
+                            <img src="{{ news_item.image.url }}" alt="Текущее изображение" style="max-width: 200px;">
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div class="form-actions">
+                <button type="submit" class="btn-save">Сохранить изменения</button>
+                <a href="{% url 'manage_news' %}" class="btn-cancel">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

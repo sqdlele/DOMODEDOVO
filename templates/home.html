@@ -1,0 +1,445 @@
+{% extends "header.html" %}
+
+
+{% block content %}
+
+        <div class="container slider" > 
+            <div>
+              <span class="slider-text1"></span>
+                <span class="slider-model">
+                    АВТОСЕРВИС DOMODEDOVO<br>
+                    15 ЛЕТ ЗАБОТИМСЯ О ВАШЕМ АВТОМОБИЛЕ
+                </span>
+                <button onclick="location.href='#onas'">
+                    <span>Узнать о нас больше</span>
+                    <a class="btn-slide">></a>
+                </button>
+                <img src="static/img/ai_image.jpg" alt="Изображение 1" class="slide">
+                <img src="static/img/image2.jpg" alt="Изображение 2" class="slide"> 
+                <img src="static/img/ai_image3.jpg" alt="Изображение 3" class="slide"> 
+            </div>
+        </div>
+        <script>
+            let currentIndex = 0;
+            const slides = document.querySelectorAll('.slide');
+            const slideInterval = 5000; 
+            function initSlides() {
+                slides.forEach((slide, index) => {
+                    slide.style.opacity = 0;
+                    slide.style.transition = 'opacity 0.8s ease-in-out';
+                });
+                slides[0].style.opacity = 1;
+            }
+            
+            function changeSlide() {
+                slides[currentIndex].style.opacity = 0;
+                currentIndex = (currentIndex + 1) % slides.length;
+                setTimeout(() => {
+                    slides[currentIndex].style.opacity = 1;
+                }, 800);
+            }
+        
+            window.addEventListener('DOMContentLoaded', () => {
+                initSlides();
+                setInterval(changeSlide, slideInterval);
+            });
+        </script>
+
+        <div class="container news" id="news">
+            <h1 class="news-title">Новости и спецпредложения</h1>
+            
+            <div class="sections-container">
+                <!-- Секция спецпредложений -->
+                <div class="special-offers-section">
+                    <h2>Акции и спецпредложения</h2>
+                    <div class="offers-carousel">
+                        {% for offer in special_offers %}
+                        <div class="news-card special-offer">
+                            <div class="offer-badge">Акция</div>
+                            {% if offer.image %}
+                                <img src="{{ offer.image.url }}" alt="{{ offer.title }}" class="news-image">
+                            {% endif %}
+                            <div class="news-content">
+                                <h3>{{ offer.title }}</h3>
+                                <p>{{ offer.content }}</p>
+                                <div class="offer-period">{{ offer.period_display }}</div>
+                                {% if offer.price %}
+                                    <div class="offer-price">{{ offer.price }} ₽</div>
+                                {% endif %}
+                                <button class="offer-button" onclick="location.href='{% url 'make_appointment' %}'">Записаться</button>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="news-card special-offer">
+                            <div class="news-content">
+                                <h3>Нет активных спецпредложений</h3>
+                                <p>Следите за нашими обновлениями</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+        
+                <!-- Секция новостей -->
+                <div class="news-section">
+                    <h2>Новости</h2>
+                    <div class="news-carousel">
+                        {% for news_item in news %}
+                        <div class="news-card">
+                            {% if news_item.image %}
+                                <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}" class="news-image">
+                            {% endif %}
+                            <div class="news-content">
+                                <h3>{{ news_item.title }}</h3>
+                                <p>{{ news_item.content }}</p>
+                                <div class="news-date">{{ news_item.date|date:"d E Y" }}</div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="news-card">
+                            <div class="news-content">
+                                <h3>Нет актуальных новостей</h3>
+                                <p>Следите за нашими обновлениями</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% block extra_js %}
+<script>
+    $(document).ready(function(){
+        // Инициализация карусели для спецпредложений
+        $('.offers-carousel').slick({
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 3000,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                }
+            ]
+        });
+
+        // Инициализация карусели для новостей
+        $('.news-carousel').slick({
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 4000,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                }
+            ]
+        });
+    });
+</script>
+{% endblock %}
+
+
+        {% comment %} <div class="container news" id="news">
+            <h1 class="news-title" >Новости и спецпредложения</h1>
+            
+            <div class="news-grid">
+                <!-- Спецпредложение  -->
+                <div class="news-card special-offer">
+                    <div class="offer-badge">Акция</div>
+                    <img src="static/img/oil-change.jpg" alt="Замена масла" class="news-image">
+                    <div class="news-content">
+                        <h3>Замена масла со скидкой 20%</h3>
+                        <p>При замене масла в двигателе - диагностика ходовой части в подарок!</p>
+                        <div class="offer-period">До 31 марта</div>
+                        <button class="offer-button" onclick="location.href=''">Записаться</button>
+                    </div>
+                </div>
+    
+                <!-- Спецпредложение  -->
+                <div class="news-card special-offer">
+                    <div class="offer-badge">Акция</div>
+                    <img src="static/img/diagnostic.jpg" alt="Диагностика" class="news-image">
+                    <div class="news-content">
+                        <h3>Комплексная диагностика</h3>
+                        <p>Полная диагностика вашего автомобиля всего за 1500 рублей</p>
+                        <div class="offer-period">Одноразовое предложение</div>
+                        <button class="offer-button" onclick="location.href=''">Записаться</button>
+                    </div>
+                </div>
+    
+                <!-- Новость -->
+                <div class="news-card">
+                    <img src="static/img/new-equipment.jpg" alt="Новое оборудование" class="news-image">
+                    <div class="news-content">
+                        <h3>Новое диагностическое оборудование</h3>
+                        <p>Мы обновили парк диагностического оборудования для более точной и быстрой диагностики современных автомобилей</p>
+                        <div class="news-date">5 марта 2025</div>
+                    </div>
+                </div>
+    
+                <!-- Новость -->
+                <div class="news-card">
+                    <img src="static/img/team.jpg" alt="Наша команда" class="news-image">
+                    <div class="news-content">
+                        <h3>Расширение команды</h3>
+                        <p>К нашей команде присоединился опытный специалист по электронике автомобилей</p>
+                        <div class="news-date">10 марта 2025</div>
+                    </div>
+                </div>
+            </div>
+        </div> {% endcomment %}
+        <div class="container about-us" id="onas">
+            <h1 class="about-title" >О нас</h1>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="about-description">
+                        Автосервис DOMODEDOVO — это современный технический центр с 15-летним опытом работы в сфере ремонта и обслуживания автомобилей. Мы находимся в городе Ижевск и специализируемся на качественном обслуживании автомобилей любых марок. Наша команда сертифицированных специалистов использует передовое диагностическое оборудование и предоставляет полный спектр услуг: от планового ТО до сложного ремонта. Мы гордимся тем, что более 10,000 клиентов доверяют нам свои автомобили, а 98% наших клиентов рекомендуют нас своим друзьям и близким.
+                    </p>
+                    <div class="about-features">
+                        <div class="feature">
+                            <h3>Наши преимущества:</h3>
+                            <ul>
+                                <li>Команда сертифицированных специалистов с опытом более 10 лет</li>
+                                <li>Современное диагностическое оборудование от ведущих производителей</li>
+                                <li>Гарантия на все виды работ до 2 лет</li>
+                                <li>Собственный склад оригинальных запчастей</li>
+                                <li>Комфортная зона ожидания с кофе и Wi-Fi</li>
+                            </ul>
+                        </div>
+                        <div class="about-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">15+</span>
+                                <span class="stat-text">лет опыта</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">10000+</span>
+                                <span class="stat-text">довольных клиентов</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">98%</span>
+                                <span class="stat-text">положительных отзывов</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-mission">
+                        <h3>Наша миссия</h3>
+                        <p>Обеспечивать безопасность и комфорт наших клиентов на дороге, предоставляя профессиональное обслуживание автомобилей по честным ценам.</p>
+                    </div>
+                    <div class="about-cta">
+                        <button class="primary-button" onclick="location.href=''">Записаться на обслуживание</button>
+                        <button class="secondary-button" onclick="location.href='{% url 'profile' %}'">Личный кабинет</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="reviews-section">
+            <h2 class="reviews-title">Отзывы наших клиентов</h2>
+            {% if average_rating %}
+            <div class="average-rating">
+                <h3 style="text-align:center;">Средняя оценка: {{ average_rating|floatformat:1 }} из 5</h3>
+            </div>
+            {% endif %}
+            
+            <div class="reviews-slider">
+                <button class="slider-arrow prev-arrow">❮</button>
+                <div class="reviews-container">
+                    {% for review in reviews %}
+<div class="review-slide">
+    <div class="review-content">
+        <div class="review-header">
+            <div class="reviewer-info">
+                <h4>Клиент: {{ review.user.get_full_name|default:review.user.username }}</h4>
+                <div class="rating">
+                    {% for i in "12345"|make_list %}
+                        {% if forloop.counter <= review.rating %}
+                            <i class="fas fa-star text-warning"></i>
+                        {% else %}
+                            <i class="far fa-star text-warning"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="service-info">
+                {% for service in review.appointment.service_type.all %}
+                    <span style="padding-left:20px;">Услуга: {{ service.name }}</span>
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <p class="review-text">{{ review.comment }}</p>
+        <div class="review-date">
+            {{ review.created_at|date:"d.m.Y" }}
+        </div>
+    </div>
+</div>
+{% endfor %}
+                </div>
+                <button class="slider-arrow next-arrow">❯</button>
+            </div>
+            <div class="reviews-dots"></div>
+        </div>
+    
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const container = document.querySelector('.reviews-container');
+                const slides = document.querySelectorAll('.review-slide');
+                const prevButton = document.querySelector('.prev-arrow');
+                const nextButton = document.querySelector('.next-arrow');
+                const dotsContainer = document.querySelector('.reviews-dots');
+                const reviewsContainer = document.querySelector('.reviews-container');
+                const reviewSlides = document.querySelectorAll('.review-slide');
+
+                let currentSlide = 0;
+                const slidesToShow = window.innerWidth < 768 ? 1 : 2;
+                
+                if (reviewSlides.length === 1) {
+                    reviewsContainer.classList.add('single-review');
+                }
+            });
+                // Создаем точки навигации
+                slides.forEach((_, index) => {
+                    if (index % slidesToShow === 0) {
+                        const dot = document.createElement('span');
+                        dot.classList.add('dot');
+                        if (index === 0) dot.classList.add('active');
+                        dot.addEventListener('click', () => goToSlide(index));
+                        dotsContainer.appendChild(dot);
+                    }
+                });
+                
+                function updateDots() {
+                    const dots = document.querySelectorAll('.dot');
+                    dots.forEach((dot, index) => {
+                        dot.classList.remove('active');
+                        if (index === Math.floor(currentSlide / slidesToShow)) {
+                            dot.classList.add('active');
+                        }
+                    });
+                }
+                
+                function goToSlide(index) {
+                    currentSlide = index;
+                    const offset = -(currentSlide * (100 / slidesToShow));
+                    container.style.transform = `translateX(${offset}%)`;
+                    updateDots();
+                }
+                
+                prevButton.addEventListener('click', () => {
+                    if (currentSlide > 0) {
+                        goToSlide(currentSlide - slidesToShow);
+                    }
+                });
+                
+                nextButton.addEventListener('click', () => {
+                    if (currentSlide < slides.length - slidesToShow) {
+                        goToSlide(currentSlide + slidesToShow);
+                    }
+                });
+                
+                // Обработка свайпов для мобильных устройств
+                let touchStartX = 0;
+                let touchEndX = 0;
+                
+                container.addEventListener('touchstart', e => {
+                    touchStartX = e.changedTouches[0].screenX;
+                });
+                
+                container.addEventListener('touchend', e => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe();
+                });
+                
+                function handleSwipe() {
+                    const swipeThreshold = 50;
+                    const diff = touchStartX - touchEndX;
+                    
+                    if (Math.abs(diff) > swipeThreshold) {
+                        if (diff > 0 && currentSlide < slides.length - slidesToShow) {
+                            goToSlide(currentSlide + slidesToShow);
+                        } else if (diff < 0 && currentSlide > 0) {
+                            goToSlide(currentSlide - slidesToShow);
+                        }
+                    }
+                }
+            });
+        </script>
+        <div class="contacts-section" id="contact">
+            <h2 class="contacts-title">Контакты</h2>
+            <div class="contacts-wrapper">
+                <div class="contact-info">
+                    <div class="info-block">
+                        <h3>Адрес</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> г. Ижевск, ул. Автозаводская, 30</p>
+                        <div class="working-hours">
+                            <h4>Режим работы:</h4>
+                            <p>Пн-Пт: 8:00 - 22:00</p>
+                            <p>Сб-Вс: 8:00 - 22:00</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-block">
+                        <h3>Связаться с нами</h3>
+                        <p><i class="fas fa-phone"></i> +7 (999) 123-45-67</p>
+                        <p><i class="fas fa-envelope"></i> info@domodedovo-auto.ru</p>
+                    </div>
+                </div>
+    
+                <div class="map-container">
+                    <div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps/44/izhevsk/?ll=53.309807%2C56.882828&mode=poi&poi%5Bpoint%5D=53.311707%2C56.885002&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D1771128491&z=16.8" style="color:#eee;font-size:12px;position:absolute;top:0px;">Ваша карта</a><iframe src="https://yandex.ru/map-widget/v1/-/PLACE_YOUR_MAP_ID" width="100%" height="400" frameborder="0" allowfullscreen="true" style="position:relative;"></iframe></div>
+                </div>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const phoneInput = document.getElementById('phone');
+                    
+                    function maskPhone(event) {
+                        let matrix = '+7 (___) ___-__-__',
+                            i = 0,
+                            def = matrix.replace(/\D/g, ''),
+                            val = this.value.replace(/\D/g, '');
+                        
+                        if (def.length >= val.length) val = def;
+                        
+                        this.value = matrix.replace(/./g, function(a) {
+                            return /[_\d]/.test(a) && i < val.length 
+                                ? val.charAt(i++) 
+                                : i >= val.length 
+                                    ? '' 
+                                    : a;
+                        });
+                    }
+                    
+                    phoneInput.addEventListener('input', maskPhone);
+                    phoneInput.addEventListener('focus', maskPhone);
+                    phoneInput.addEventListener('blur', maskPhone);
+                });
+        
+                // Обработка отправки формы
+                document.getElementById('contactForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Здесь будет код отправки формы на сервер
+                    alert('Спасибо за заявку! Мы свяжемся с вами в ближайшее время.');
+                    this.reset();
+                });
+            </script>
+        </div>
+    
+        
+    
+
+
+        
+
+        
+{% endblock %}
+

@@ -1,0 +1,201 @@
+{% extends "header.html" %}
+{% load custom_filters %}
+{% load socialaccount %}
+
+{% block content %}
+<br>
+<h2 style="text-align: center; color: white;">Личный кабинет</h2>
+<div class="container-profile">
+    {% if user.is_authenticated %}
+        <div class="profile-section">
+            {% if google_data %}
+            {% if google_data.picture %}
+                    <img src="{{ google_data.picture }}" alt="Profile Picture" class="profile-picture">
+                {% endif %}
+                <h3 style="color: white;">
+                    {% if google_data.name %}
+                        {{ google_data.name }}
+                    {% elif google_data.given_name %}
+                        {{ google_data.given_name }} {{ google_data.family_name }}
+                    {% else %}
+                        {{ user.email }}
+                    {% endif %}
+                </h3>
+                
+            {% else %}
+                <h3 style="color: white;">Здравствуйте, <span style="color: #f5bb1b;">{{ user.username }}</span>!</h3>
+            {% endif %}
+            <a href="{% url 'account_logout' %}" class="logout-btn">Выйти</a>
+        </div>
+
+        <div class="profile-section">
+            <h4>Личные данные</h4>
+            <p>Email: {{ user.email }}</p>
+            <p>Телефон: {{ user.profile.phone|default:"Не указан" }}</p>
+            <a href="{% url 'edit_profile' %}" class="edit-btn">Редактировать данные</a>
+        </div>
+
+        <div class="profile-section">
+            <h4>Мои записи</h4>
+            {% if appointments %}
+                {% for appointment in appointments %}
+                    <div class="appointment">
+                        <p>Дата: {{ appointment.date|russian_date }}</p>
+                        <p>Время: {{ appointment.time|russian_time }}</p>
+                        <p>Услуга: 
+                            {% for service in appointment.service_type.all %}
+                                {{ service.name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                        <p>Статус: {{ appointment.get_status_display }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Активных записей нет</p>
+            {% endif %}
+            <a href="{% url 'services' %}" class="schedule-btn">Записаться на сервис</a>
+        </div>
+    {% endif %}
+
+    <div class="profile-section">
+      <h4>История обслуживания</h4>
+      {% if service_records %}
+          {% for service in service_records %}
+              <div class="appointment">
+                  <p>Дата: {{ service.date }}</p>
+                  <p>Время: {{ service.time }}</p>
+                  <p>Услуга:
+                      {% for service_type in service.service_type.all %}
+                          {{ service_type.name }} - {{ service_type.price }} руб.
+                      {% endfor %}
+                  </p>
+                  <p>Статус: {{ service.get_status_display }}</p>
+                  
+                  {% if service.status == 'completed' %}
+                      {% if not service.review %}
+                          <a href="{% url 'create_review' service.id %}" class="review-btn">Оставить отзыв</a>
+                      {% else %}
+                          <div class="review-info">
+                              <p>Ваш отзыв:
+                                  {% for i in "12345"|make_list %}
+                                      {% if forloop.counter <= service.review.rating %}
+                                          <i class="fas fa-star text-warning"></i>
+                                      {% else %}
+                                          <i class="far fa-star text-warning"></i>
+                                      {% endif %}
+                                  {% endfor %}
+                              </p>
+                              <p class="review-comment">{{ service.review.comment }}</p>
+                          </div>
+                      {% endif %}
+                  {% endif %}
+              </div>
+          {% endfor %}
+      {% else %}
+          <p>У вас не было завершенных услуг :c</p>
+      {% endif %}
+  </div>
+</div>
+
+
+
+<style>
+    .container-profile {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+
+
+    .edit-btn, .schedule-btn {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #f5bb1b;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        margin-top: 10px;
+        transition: background-color 0.3s;
+    }
+
+    .edit-btn:hover, .schedule-btn:hover {
+        background-color: #e5ab0b;
+        color: white;
+    }
+    .profile-picture {
+      width: 50;
+      height: 50;
+      border-radius: 50%;
+      border: 3px solid #f5bb1b;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .profile-header {
+      text-align: center;
+      margin-bottom: 30px;
+  }
+    .logout-btn {
+        padding: 8px 16px;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+    .logout-btn:hover {
+        background-color:rgba(255, 0, 25, 0.41);
+        color: white;
+    }
+
+    .appointment {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 6px;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    .review-btn {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #f5bb1b;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        margin-top: 10px;
+        transition: background-color 0.3s;
+    }
+
+    .review-btn:hover {
+        background-color: #e5ab0b;
+        color: white;
+    }
+
+    .review-info {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: rgba(245, 187, 27, 0.1);
+        border-radius: 4px;
+    }
+
+    .text-warning {
+        color: #f5bb1b;
+    }
+
+    .review-comment {
+        font-style: italic;
+        color: #ccc;
+        margin-top: 5px;
+    }
+
+    @media (max-width: 768px) {
+        .container-profile {
+            padding: 10px;
+        }
+
+        .profile-section {
+            padding: 15px;
+        }
+    }
+</style>
+{% endblock %}

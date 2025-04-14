@@ -1,0 +1,176 @@
+
+{% extends 'home.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/support_chat.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="support-chat-container">
+    <!-- Список чатов -->
+    <div class="chat-list-panel">
+        <div class="support-chat-list-header">
+            <h5>Активные чаты</h5>
+        </div>
+        <div class="support-chat-list-body" id="chatList">
+            <!-- Чаты будут добавлены через JavaScript -->
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="chat-verh">
+            <h5 id="currentChatUser">Выберите чат для начала общения</h5>
+        </div>
+        <div id="messagesContainer" class="messages-container">
+        </div>
+        <div class="message-form">
+            <form id="supportMessageForm" method="post">
+                {% csrf_token %}
+                <div class="message-input-group">
+                    <input type="text" 
+                           id="supportMessageInput" 
+                           name="message"
+                           class="message-input"
+                           placeholder="Введите сообщение..."
+                           autocomplete="off">
+                    <input type="hidden" id="currentClientId" name="client_id">
+                    <button type="submit" class="send-button">Отправить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const chatList = document.getElementById('chatList');
+    const messagesContainer = document.getElementById('messagesContainer');
+    const messageForm = document.getElementById('supportMessageForm');
+    const messageInput = document.getElementById('supportMessageInput');
+    const currentClientId = document.getElementById('currentClientId');
+    const currentChatUser = document.getElementById('currentChatUser');
+    let selectedChatId = null;
+
+    // Загрузка списка чатов
+    function loadChatList() {
+        fetch('{% url "chat:chat_list" %}')
+            .then(response => response.json())
+            .then(data => {
+                chatList.innerHTML = '';
+                data.chats.forEach(chat => {
+                    const div = document.createElement('div');
+                    div.className = 'chat-item';
+                    div.innerHTML = `
+                        <div class="chat-item-header">
+                            <div class="client-name">${chat.client_name}</div>
+                            ${chat.unread_count > 0 ? 
+                                `<span class="unread-badge">${chat.unread_count}</span>` : 
+                                ''}
+                        </div>
+                        <div class="last-message">${chat.last_message || 'Нет сообщений'}</div>
+                    `;
+                    div.addEventListener('click', function() {
+                        selectChat(chat.client_id, chat.client_name);
+                    });
+                    chatList.appendChild(div);
+                });
+            })
+            .catch(error => console.error('Ошибка загрузки чатов:', error));
+    }
+
+    // Выбор чата
+    function selectChat(clientId, clientName) {
+        
+        document.querySelectorAll('.chat-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        event.currentTarget.classList.add('active');
+
+        loadMessages(clientId);
+    }
+
+    // Загрузка сообщений
+    function loadMessages(clientId) {
+        fetch(`{% url 'chat:get_messages' %}?client_id=${clientId}`)
+            .then(response => response.json())
+            .then(data => {
+                messagesContainer.innerHTML = '';
+                data.messages.forEach(msg => {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `message ${msg.is_sender ? 'sent' : 'received'}`;
+                    messageDiv.innerHTML = `
+                        <div class="message-content">${msg.content}</div>
+                        <div class="message-time">${msg.timestamp}</div>
+                    `;
+                    messagesContainer.appendChild(messageDiv);
+                });
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            })
+            .catch(error => console.error('Ошибка загрузки сообщений:', error));
+    }
+
+    // Отслеживаем ввод в поле сообщения
+    messageInput.addEventListener('input', function() {
+        console.log('Текущий текст:', this.value);
+    });
+
+    // Обработчик отправки формы
+    messageForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        if (!text) {
+            console.log('Ошибка: пустое сообщение');
+            return;
+        }
+
+        if (!clientId) {
+            console.log('Ошибка: не выбран клиент');
+            return;
+        }
+
+        // Отправляем запрос
+        fetch('{% url "chat:chat" %}', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: new FormData(this)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Ответ сервера:', data);
+            if (data.status === 'success') {
+                messageInput.value = '';
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message sent';
+                messageDiv.innerHTML = `
+                    <div class="message-content">${text}</div>
+                    <div class="message-time">${data.timestamp}</div>
+                `;
+                messagesContainer.appendChild(messageDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        })
+        .catch(error => console.error('Ошибка отправки:', error));
+    });
+
+
+    // Автообновление
+    setInterval(() => {
+        if (selectedChatId) {
+            loadMessages(selectedChatId);
+        }
+        loadChatList();
+    }, 5000);
+
+    // Начальная загрузка
+    loadChatList();
+    
+    // Добавляем обработчик для поля ввода
+    messageInput.addEventListener('input', function() {
+        console.log('Введен текст:', this.value);
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,260 @@
+{% extends "header.html" %}
+
+{% block content %}
+<div class="appointment-container">
+    <h2>Запись на обслуживание</h2>
+    
+    <form method="post" class="appointment-form">
+        {% csrf_token %}
+        
+        {% if selected_service %}
+        <div class="selected-service">
+            <h3>Выбранная услуга:</h3>
+            <div class="service-card">
+                {% if selected_service.image %}
+                    <div class="service-image" style="background-image: url('{{ selected_service.image.url }}')"></div>
+                {% else %}
+                    <div class="service-image" style="background-image: url('{% static 'images/default-service.jpg' %}')"></div>
+                {% endif %}
+                <div class="service-info">
+                    <h4>{{ selected_service.name }}</h4>
+                    <p>{{ selected_service.description }}</p>
+                    <div class="service-price">{{ selected_service.price }} ₽</div>
+                </div>
+                <input type="hidden" name="service_id" value="{{ selected_service.id }}">
+            </div>
+            <a href="{% url 'services' %}" class="change-service-btn">Выбрать другую услугу</a>
+        </div>
+        {% else %}
+            <div class="no-service-selected">
+                <p>Услуга не выбрана. Пожалуйста, выберите услугу на <a href="{% url 'services' %}">странице услуг</a>.</p>
+            </div>
+        {% endif %}
+
+        <div class="datetime-section">
+            <div class="form-group">
+                <label for="date">Дата:</label>
+                <input type="date" 
+                       id="date" 
+                       name="date" 
+                       min="{{ min_date|date:'Y-m-d' }}" 
+                       required>
+            </div>
+            
+            <div class="form-group">
+                <label for="time">Время:</label>
+                <input type="time" 
+                       id="time" 
+                       name="time" 
+                       min="09:00" 
+                       max="18:00" 
+                       required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="notes">Примечания:</label>
+            <textarea id="notes" 
+                      name="notes" 
+                      rows="4" 
+                      placeholder="Дополнительная информация..."></textarea>
+        </div>
+
+        {% if selected_service %}
+            <button type="submit" class="submit-btn">Записаться</button>
+        {% endif %}
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('appointment-form');
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Собираем данные формы
+            const formData = new FormData(form);
+            
+            // Отправляем AJAX запрос
+            fetch(window.location.href, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Показываем уведомление об успехе
+                    Swal.fire({
+                        title: 'Успешно!',
+                        text: data.message,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Перенаправляем на страницу профиля
+                            window.location.href = data.redirect_url;
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    title: 'Ошибка!',
+                    text: 'Произошла ошибка при отправке формы',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+        });
+    });
+<style>
+.appointment-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.selected-service {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+.selected-service h3 {
+    color: #f5bb1b;
+    margin-bottom: 15px;
+}
+
+.service-card {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.service-image {
+    width: 200px;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+}
+
+.service-info {
+    flex: 1;
+}
+
+.service-info h4 {
+    color: #f5bb1b;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.service-info p {
+    color: white;
+    margin-bottom: 15px;
+}
+
+.service-price {
+    font-size: 24px;
+    color: #f5bb1b;
+    font-weight: bold;
+}
+
+.change-service-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    background: rgba(245, 187, 27, 0.2);
+    color: #f5bb1b;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.change-service-btn:hover {
+    background: rgba(245, 187, 27, 0.3);
+}
+
+.datetime-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: white;
+    margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: #f5bb1b;
+    border: none;
+    border-radius: 8px;
+    color: black;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background: #d4a016;
+}
+
+.no-service-selected {
+    text-align: center;
+    padding: 40px;
+    color: white;
+}
+
+.no-service-selected a {
+    color: #f5bb1b;
+    text-decoration: none;
+}
+
+.no-service-selected a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .datetime-section {
+        grid-template-columns: 1fr;
+    }
+    
+    .service-card {
+        flex-direction: column;
+    }
+    
+    .service-image {
+        width: 100%;
+    }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "header.html" %}
+
+{% block content %}
+<br>
+<br>
+
+<div class="container-register">
+    <h2>Регистрация</h2>
+   
+    <form class="formas"  method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <button type="submit">Зарегистрироваться</button>
+    </form> 
+</div>
+{% endblock %}

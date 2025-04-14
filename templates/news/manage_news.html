@@ -1,0 +1,83 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="management-container">
+    <h2 class="management-title">Управление новостями</h2>
+    
+    <div class="form-card">
+        <h4>Добавить новость</h4>
+        <form method="post" enctype="multipart/form-data" class="management-form">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="error-message">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+                    {% if field.name == 'image' %}
+                        <img id="imagePreview" class="image-preview" src="#" alt="Предпросмотр изображения">
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit">Добавить новость</button>
+        </form>
+    </div>
+
+    <div class="records-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Заголовок</th>
+                    <th>Дата</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for news_item in news_list %}
+                <tr>
+                    <td>{{ news_item.title }}</td>
+                    <td>{{ news_item.date|date:"d.m.Y" }}</td>
+                    <td>
+                        <span class="status-badge {% if news_item.is_active %}status-active{% else %}status-inactive{% endif %}">
+                            {% if news_item.is_active %}Активно{% else %}Неактивно{% endif %}
+                        </span>
+                    </td>
+                    <td class="action-buttons">
+                    <a href="{% url 'edit_news' news_item.id %}" class="btn-edit">Редактировать</a>
+                    <a href="{% url 'delete_news' news_item.id %}" class="btn-delete">Удалить</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" style="text-align: center;">Нет добавленных новостей</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Предпросмотр изображения
+    document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+        const preview = document.getElementById('imagePreview');
+        const file = e.target.files[0];
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.classList.add('show');
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+
+{% endblock %}

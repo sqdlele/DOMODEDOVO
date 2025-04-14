@@ -1,0 +1,170 @@
+{% extends 'header.html' %}
+{% load static %}
+
+{% block content %}
+<div class="management-container">
+    <h2 class="management-title">Управление спецпредложениями</h2>
+    
+    <!-- Форма добавления спецпредложения -->
+    <div class="form-card">
+        <h4>Добавить спецпредложение</h4>
+        <form method="post" enctype="multipart/form-data" class="management-form">
+            {% csrf_token %}
+            
+            <!-- Основные поля -->
+            <div class="form-group1">
+                <label for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <div class="error-message">{{ form.title.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group1">
+                <label for="{{ form.content.id_for_label }}">{{ form.content.label }}</label>
+                {{ form.content }}
+                {% if form.content.errors %}
+                    <div class="error-message">{{ form.content.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Изображение с предпросмотром -->
+            <div class="form-group1">
+                <label for="{{ form.image.id_for_label }}">{{ form.image.label }}</label>
+                {{ form.image }}
+                {% if form.image.errors %}
+                    <div class="error-message">{{ form.image.errors }}</div>
+                {% endif %}
+                <img id="imagePreview" class="image-preview" src="#" alt="Предпросмотр изображения">
+            </div>
+
+            <!-- Цена и дата окончания -->
+            <div class="form-row">
+                <div class="form-group1">
+                    <label for="{{ form.price.id_for_label }}">{{ form.price.label }}</label>
+                    {{ form.price }}
+                    {% if form.price.errors %}
+                        <div class="error-message">{{ form.price.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group1">
+                    <label for="{{ form.end_date.id_for_label }}">{{ form.end_date.label }}</label>
+                    {{ form.end_date }}
+                    {% if form.end_date.errors %}
+                        <div class="error-message">{{ form.end_date.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Чекбоксы -->
+            <div class="form-group1">
+                <div class="checkbox-group">
+                    <label for="{{ form.is_one_time.id_for_label }}">
+                        {{ form.is_one_time }}
+                        {{ form.is_one_time.label }}
+                    </label>
+                </div>
+                {% if form.is_one_time.errors %}
+                    <div class="error-message">{{ form.is_one_time.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group1">
+                <div class="checkbox-group">
+                    <label for="{{ form.is_active.id_for_label }}">
+                        {{ form.is_active }}
+                        {{ form.is_active.label }}
+                    </label>
+                </div>
+                {% if form.is_active.errors %}
+                    <div class="error-message">{{ form.is_active.errors }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit">Добавить спецпредложение</button>
+        </form>
+    </div>
+
+    <!-- Список существующих спецпредложений -->
+    <div class="records-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Заголовок</th>
+                    <th>Цена</th>
+                    <th>Период</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for offer in offers %}
+                <tr>
+                    <td>{{ offer.title }}</td>
+                    <td>{% if offer.price %}{{ offer.price }} ₽{% else %}-{% endif %}</td>
+                    <td>
+                        {% if offer.is_one_time %}
+                            Одноразовое предложение
+                        {% elif offer.end_date %}
+                            До {{ offer.end_date|date:"d.m.Y" }}
+                        {% else %}
+                            Бессрочно
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span class="status-badge {% if offer.is_active %}status-active{% else %}status-inactive{% endif %}">
+                            {% if offer.is_active %}Активно{% else %}Неактивно{% endif %}
+                        </span>
+                    </td>
+                    <td class="action-buttons">
+                        <a href="{% url 'edit_news' news_item.id %}" class="btn-edit">Редактировать</a></button>
+                        <a href="{% url 'delete_news' news_item.id %}" class="btn-delete">Удалить</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" style="text-align: center;">Нет добавленных спецпредложений</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Предпросмотр изображения
+    document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+        const preview = document.getElementById('imagePreview');
+        const file = e.target.files[0];
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.classList.add('show');
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Обработка одноразового предложения
+    document.getElementById('{{ form.is_one_time.id_for_label }}').addEventListener('change', function(e) {
+        const endDateField = document.getElementById('{{ form.end_date.id_for_label }}');
+        if (this.checked) {
+            endDateField.value = '';
+            endDateField.disabled = true;
+        } else {
+            endDateField.disabled = false;
+        }
+    });
+
+    // Подтверждение удаления
+    function confirmDelete(offerId) {
+        if (confirm('Вы уверены, что хотите удалить это спецпредложение?')) {
+            // Здесь можно добавить AJAX-запрос на удаление
+            console.log('Удаление спецпредложения с ID:', offerId);
+        }
+    }
+</script>
+{% endblock %}
