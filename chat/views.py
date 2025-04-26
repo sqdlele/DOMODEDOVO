@@ -18,20 +18,25 @@ def chat_view(request):
     """
     if request.method == 'POST':
         message_content = request.POST.get('message', '').strip()
-        client_id = request.POST.get('client_id')
         
-
-        if not message_content or not client_id:
+        if not message_content:
             return JsonResponse({
                 'status': 'error',
-                'message': 'Необходимо указать сообщение и ID клиента'
+                'message': 'Необходимо указать сообщение'
             })
 
         try:
             if is_support(request.user):
-                client = User.objects.get(id=client_id)
-                receiver = client
+                # Для поддержки требуется client_id
+                client_id = request.POST.get('client_id')
+                if not client_id:
+                    return JsonResponse({
+                        'status': 'error',
+                        'message': 'Необходимо указать ID клиента'
+                    })
+                receiver = User.objects.get(id=client_id)
             else:
+                # Для обычного пользователя находим первого доступного оператора поддержки
                 receiver = User.objects.filter(profile__role='support').first()
                 if not receiver:
                     return JsonResponse({
@@ -59,7 +64,6 @@ def chat_view(request):
                 'status': 'error',
                 'message': 'User not found'
             })
-
 
     template = 'chat/support_chat.html' if is_support(request.user) else 'chat/chat_panel.html'
     return render(request, template, {'is_support': is_support(request.user)})

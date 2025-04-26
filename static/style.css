@@ -1117,12 +1117,14 @@ nav {
 .map-container {
     flex: 1;
     min-width: 300px;
-    height: 400px;
+    height: 450;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 15px rgba(0,0,0,0.1);
 }
-
+canvas{
+    min-height: 400px;
+}
 @media (max-width: 768px) {
     .contacts-wrapper {
         flex-direction: column;
@@ -1131,6 +1133,7 @@ nav {
     .contact-info,
     .map-container {
         width: 100%;
+        min-height: 400px;
     }
     
     .info-block,
@@ -2011,4 +2014,33 @@ input:-webkit-autofill:focus {
     padding: 0 16px;
     color: #5f6368;
     font-size: 14px;
+}
+.service-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding: 0.25rem 0;
+}
+
+.service-price {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.original-price {
+    font-size: 0.9em;
+    color: #6c757d;
+    text-decoration: line-through;
+}
+
+.special-price {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.badge {
+    font-size: 0.75em;
+    padding: 0.25em 0.5em;
 }

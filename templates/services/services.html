@@ -44,7 +44,16 @@
                                 <h3>{{ service.name }}</h3>
                                 <p>{{ service.description }}</p>
                                 <div class="service-footer">
-                                    <div class="service-price">{{ service.price }} ₽</div>
+                                    <div class="service-price">
+                                        {% if service.special_offers.exists %}
+                                            <span class="original-price">{{ service.price }}₽</span>
+                                            <span class="special-price">{{ service.get_actual_price }}₽</span>
+                                        {% else %}
+                                            {{ service.price }} ₽
+                                        {% endif %}
+                                    </div>
+
+                                    
                                     <form action="{% url 'make_appointment' %}" method="get">
                                         <input type="hidden" name="service_id" value="{{ service.id }}">
                                         <button type="submit" class="book-btn">Записаться</button>

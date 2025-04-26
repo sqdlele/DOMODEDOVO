@@ -47,7 +47,6 @@
 
         <div class="container news" id="news">
             <h1 class="news-title">Новости и спецпредложения</h1>
-            
             <div class="sections-container">
                 <!-- Секция спецпредложений -->
                 <div class="special-offers-section">
@@ -107,95 +106,32 @@
                 </div>
             </div>
         </div>
+        
+        <script>
+            $(document).ready(function(){
+                // Инициализация карусели для спецпредложений (только 1 карточка на экране)
+                $('.offers-carousel').slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                    autoplaySpeed: 3000,
+                    arrows: false,
+                    dots: false,
 
-{% block extra_js %}
-<script>
-    $(document).ready(function(){
-        // Инициализация карусели для спецпредложений
-        $('.offers-carousel').slick({
-            slidesToShow: 2,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 3000,
-            responsive: [
-                {
-                    breakpoint: 768,
-                    settings: {
-                        slidesToShow: 1
-                    }
-                }
-            ]
-        });
+                });
+        
+                // Инициализация карусели для новостей (также 1 карточка на экране)
+                $('.news-carousel').slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                    autoplaySpeed: 4000,
+                    arrows: false,
+                    dots: true,
+                });
+            });
+        </script>
 
-        // Инициализация карусели для новостей
-        $('.news-carousel').slick({
-            slidesToShow: 2,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 4000,
-            responsive: [
-                {
-                    breakpoint: 768,
-                    settings: {
-                        slidesToShow: 1
-                    }
-                }
-            ]
-        });
-    });
-</script>
-{% endblock %}
-
-
-        {% comment %} <div class="container news" id="news">
-            <h1 class="news-title" >Новости и спецпредложения</h1>
-            
-            <div class="news-grid">
-                <!-- Спецпредложение  -->
-                <div class="news-card special-offer">
-                    <div class="offer-badge">Акция</div>
-                    <img src="static/img/oil-change.jpg" alt="Замена масла" class="news-image">
-                    <div class="news-content">
-                        <h3>Замена масла со скидкой 20%</h3>
-                        <p>При замене масла в двигателе - диагностика ходовой части в подарок!</p>
-                        <div class="offer-period">До 31 марта</div>
-                        <button class="offer-button" onclick="location.href=''">Записаться</button>
-                    </div>
-                </div>
-    
-                <!-- Спецпредложение  -->
-                <div class="news-card special-offer">
-                    <div class="offer-badge">Акция</div>
-                    <img src="static/img/diagnostic.jpg" alt="Диагностика" class="news-image">
-                    <div class="news-content">
-                        <h3>Комплексная диагностика</h3>
-                        <p>Полная диагностика вашего автомобиля всего за 1500 рублей</p>
-                        <div class="offer-period">Одноразовое предложение</div>
-                        <button class="offer-button" onclick="location.href=''">Записаться</button>
-                    </div>
-                </div>
-    
-                <!-- Новость -->
-                <div class="news-card">
-                    <img src="static/img/new-equipment.jpg" alt="Новое оборудование" class="news-image">
-                    <div class="news-content">
-                        <h3>Новое диагностическое оборудование</h3>
-                        <p>Мы обновили парк диагностического оборудования для более точной и быстрой диагностики современных автомобилей</p>
-                        <div class="news-date">5 марта 2025</div>
-                    </div>
-                </div>
-    
-                <!-- Новость -->
-                <div class="news-card">
-                    <img src="static/img/team.jpg" alt="Наша команда" class="news-image">
-                    <div class="news-content">
-                        <h3>Расширение команды</h3>
-                        <p>К нашей команде присоединился опытный специалист по электронике автомобилей</p>
-                        <div class="news-date">10 марта 2025</div>
-                    </div>
-                </div>
-            </div>
-        </div> {% endcomment %}
         <div class="container about-us" id="onas">
             <h1 class="about-title" >О нас</h1>
             <div class="about-content">
@@ -252,36 +188,51 @@
                 <button class="slider-arrow prev-arrow">❮</button>
                 <div class="reviews-container">
                     {% for review in reviews %}
-<div class="review-slide">
-    <div class="review-content">
-        <div class="review-header">
-            <div class="reviewer-info">
-                <h4>Клиент: {{ review.user.get_full_name|default:review.user.username }}</h4>
-                <div class="rating">
-                    {% for i in "12345"|make_list %}
-                        {% if forloop.counter <= review.rating %}
-                            <i class="fas fa-star text-warning"></i>
-                        {% else %}
-                            <i class="far fa-star text-warning"></i>
-                        {% endif %}
+                    <div class="review-slide">
+                        <div class="review-content">
+                            <div class="review-header">
+                                <div class="reviewer-info">
+                                    <h4>Клиент: {{ review.user.get_full_name|default:review.user.username }}</h4>
+                                    <div class="rating">
+                                        {% for i in "12345"|make_list %}
+                                            {% if forloop.counter <= review.rating %}
+                                                <i class="fas fa-star text-warning"></i>
+                                            {% else %}
+                                                <i class="far fa-star text-warning"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="service-info">
+                                    {% for service in review.appointment.service_type.all %}
+                                        <div class="service-item">
+                                            <span style="padding-left:20px;">Услуга: {{ service.name }}</span>
+                                            <div class="service-price">
+                                                {% if service.has_discount %}
+                                                    <span class="original-price text-muted text-decoration-line-through">
+                                                        {{ service.original_price }}₽
+                                                    </span>
+                                                    <span class="special-price text-success">
+                                                        {{ service.current_price }}₽
+                                                    </span>
+                                                    <span class="badge bg-danger">Акция!</span>
+                                                {% else %}
+                                                    <span class="price">{{ service.price }}₽</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="review-text">
+                                {{ review.comment }}
+                            </div>
+                            <div class="review-date">
+                                {{ review.created_at|date:"d.m.Y" }}
+                            </div>
+                        </div>
+                    </div>
                     {% endfor %}
-                </div>
-            </div>
-            
-            <div class="service-info">
-                {% for service in review.appointment.service_type.all %}
-                    <span style="padding-left:20px;">Услуга: {{ service.name }}</span>
-                    {% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-        <p class="review-text">{{ review.comment }}</p>
-        <div class="review-date">
-            {{ review.created_at|date:"d.m.Y" }}
-        </div>
-    </div>
-</div>
-{% endfor %}
                 </div>
                 <button class="slider-arrow next-arrow">❯</button>
             </div>
@@ -394,7 +345,7 @@
                 </div>
     
                 <div class="map-container">
-                    <div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps/44/izhevsk/?ll=53.309807%2C56.882828&mode=poi&poi%5Bpoint%5D=53.311707%2C56.885002&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D1771128491&z=16.8" style="color:#eee;font-size:12px;position:absolute;top:0px;">Ваша карта</a><iframe src="https://yandex.ru/map-widget/v1/-/PLACE_YOUR_MAP_ID" width="100%" height="400" frameborder="0" allowfullscreen="true" style="position:relative;"></iframe></div>
+                    <div style="position:relative; overflow:hidden; height:100%; "><iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Aee96a8ea156e22f4a5b2cdfb664fa9d0e6b05b3485df4b3db4b6ef6ad24a17cb&amp;source=constructor" width="100%" height="100%" frameborder="0" allowfullscreen="true" style="position:relative;"></iframe></div>
                 </div>
             </div>
             <script>

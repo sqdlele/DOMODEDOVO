@@ -92,9 +92,10 @@ class ServiceType(models.Model):
     
     name = models.CharField(max_length=100, verbose_name="Название услуги")
     description = models.TextField(verbose_name="Описание")
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Ц��на")
     category = models.CharField(max_length=50, choices=CATEGORIES, verbose_name="Категория")
     image = models.ImageField(upload_to='services/', null=True, blank=True, verbose_name="Изображение")
+    original_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, verbose_name="Оригинальная цена")
     
     class Meta:
         verbose_name = "Услуга"
@@ -103,6 +104,20 @@ class ServiceType(models.Model):
     
     def __str__(self):
         return f"{self.category} - {self.name}"
+
+    def get_actual_price(self):
+        """Получение актуальной цены с учетом действующих акций"""
+        active_offer = self.special_offers.filter(
+            servicespecialoffer__is_active=True
+        ).first()
+        return active_offer.price if active_offer else self.price
+
+    def restore_original_price(self):
+        """Восстановление оригинальной цены"""
+        if self.original_price:
+            self.price = self.original_price
+            self.original_price = None
+            self.save()
 
 class ServiceRecord(models.Model):
     STATUS_CHOICES = [
@@ -229,7 +244,7 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
-
+    
 class SpecialOffer(models.Model):
     title = models.CharField(max_length=200, verbose_name="Заголовок")
     content = models.TextField(verbose_name="Содержание")
@@ -239,6 +254,12 @@ class SpecialOffer(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, verbose_name="Цена")
     is_active = models.BooleanField(default=True, verbose_name="Активно")
     created_at = models.DateTimeField(auto_now_add=True)
+    services = models.ManyToManyField(
+        ServiceType,
+        through='ServiceSpecialOffer',
+        related_name='special_offers',
+        verbose_name="Связанные услуги"
+    )
 
     class Meta:
         verbose_name = "Спецпредложение"
@@ -248,6 +269,28 @@ class SpecialOffer(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.is_active and self.price is not None:
+            service_offers = ServiceSpecialOffer.objects.filter(special_offer=self)
+            for service_offer in service_offers:
+                service = service_offer.service
+                if not service.original_price:
+                    service.original_price = service.price
+                service.price = self.price
+                service.save()
+
+    def deactivate(self):
+        self.is_active = False
+        self.save()
+        service_offers = ServiceSpecialOffer.objects.filter(special_offer=self)
+        for service_offer in service_offers:
+            service = service_offer.service
+            if service.original_price:
+                service.price = service.original_price
+                service.original_price = None
+                service.save()
+
     @property
     def period_display(self):
         if self.is_one_time:
@@ -255,3 +298,18 @@ class SpecialOffer(models.Model):
         elif self.end_date:
             return f"До {self.end_date.strftime('%d %B')}"
         return "Бессрочная акция"
+    
+class ServiceSpecialOffer(models.Model):
+    """Промежуточная модель для связи услуг и акций"""
+    service = models.ForeignKey(ServiceType, on_delete=models.CASCADE, verbose_name="Услуга")
+    special_offer = models.ForeignKey(SpecialOffer, on_delete=models.CASCADE, verbose_name="Акция")
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True, verbose_name="Активно")
+
+    class Meta:
+        verbose_name = "Связь услуги и акции"
+        verbose_name_plural = "Связи услуг и акций"
+        unique_together = ('service', 'special_offer')
+
+    def __str__(self):
+        return f"{self.service} - {self.special_offer}"

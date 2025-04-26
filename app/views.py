@@ -141,13 +141,23 @@ def home(request):
     special_offers = SpecialOffer.objects.filter(is_active=True).order_by('-created_at')
     news = News.objects.filter(is_active=True).order_by('-date')
     
-    # Получаем последние отзывы для отображения на главной
+    # Получаем последние отзывы с информацией о ценах
     reviews = Review.objects.select_related(
         'user',
         'appointment'
     ).prefetch_related(
-        'appointment__service_type'
+        'appointment__service_type',
+        'appointment__service_type__special_offers'
     ).all()[:5]
+
+    for review in reviews:
+        # Добавляем информацию о ценах для каждой услуги в отзыве
+        for service in review.appointment.service_type.all():
+            service.current_price = service.get_actual_price()
+            if hasattr(service, 'original_price') and service.original_price:
+                service.has_discount = True
+            else:
+                service.has_discount = False
     
     average_rating = reviews.aggregate(Avg('rating'))['rating__avg']
     
@@ -159,7 +169,7 @@ def home(request):
         'title': 'Главная'
     }
     
-    return render(request, 'home.html', context)    
+    return render(request, 'home.html', context)  
 
 def header(request):
     return render(request, 'header.html')
@@ -407,7 +417,23 @@ def create_review(request, appointment_id):
     return render(request, 'reviews/create_review.html', context)
 
 def get_reviews(request):
-    reviews = Review.objects.select_related('user', 'service_record').all()
+    reviews = Review.objects.select_related(
+        'user',
+        'appointment'
+    ).prefetch_related(
+        'appointment__service_type',
+        'appointment__service_type__special_offers'
+    ).all()
+
+    for review in reviews:
+        # Добавляем информацию о ценах для каждой услуги в отзыве
+        for service in review.appointment.service_type.all():
+            service.current_price = service.get_actual_price()
+            if hasattr(service, 'original_price') and service.original_price:
+                service.has_discount = True
+            else:
+                service.has_discount = False
+
     average_rating = reviews.aggregate(Avg('rating'))['rating__avg']
     
     context = {
@@ -440,16 +466,38 @@ def manage_special_offers(request):
     if request.method == 'POST':
         form = SpecialOfferForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            special_offer = form.save()
             messages.success(request, 'Спецпредложение успешно добавлено')
             return redirect('manage_special_offers')
+        else:
+            for error in form.errors.values():
+                messages.error(request, error)
     else:
         form = SpecialOfferForm()
     
-    offers = SpecialOffer.objects.all()
+    # Получаем все акции с информацией о связанных услугах
+    offers = SpecialOffer.objects.prefetch_related('services').all()
+    
+    # Готовим данные для отображения
+    offers_data = []
+    for offer in offers:
+        services_info = [
+            {
+                'name': service.name,
+                'original_price': service.original_price or service.price,
+                'current_price': service.price
+            }
+            for service in offer.services.all()
+        ]
+        
+        offers_data.append({
+            'offer': offer,
+            'services': services_info
+        })
+    
     return render(request, 'news/manage_special_offers.html', {
         'form': form,
-        'offers': offers,
+        'offers_data': offers_data,
         'title': 'Управление спецпредложениями'
     })
 
