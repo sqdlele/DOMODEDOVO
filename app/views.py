@@ -466,39 +466,50 @@ def manage_special_offers(request):
     if request.method == 'POST':
         form = SpecialOfferForm(request.POST, request.FILES)
         if form.is_valid():
-            special_offer = form.save()
-            messages.success(request, 'Спецпредложение успешно добавлено')
-            return redirect('manage_special_offers')
+            try:
+                special_offer = form.save()
+                messages.success(request, 'Спецпредложение успешно добавлено')
+                return redirect('manage_special_offers')
+            except Exception as e:
+                messages.error(request, f'Ошибка при сохранении: {str(e)}')
         else:
-            for error in form.errors.values():
-                messages.error(request, error)
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'Ошибка в поле {field}: {error}')
     else:
         form = SpecialOfferForm()
     
-    # Получаем все акции с информацией о связанных услугах
     offers = SpecialOffer.objects.prefetch_related('services').all()
-    
-    # Готовим данные для отображения
-    offers_data = []
-    for offer in offers:
-        services_info = [
-            {
-                'name': service.name,
-                'original_price': service.original_price or service.price,
-                'current_price': service.price
-            }
-            for service in offer.services.all()
-        ]
-        
-        offers_data.append({
-            'offer': offer,
-            'services': services_info
-        })
     
     return render(request, 'news/manage_special_offers.html', {
         'form': form,
-        'offers_data': offers_data,
+        'offers': offers,
         'title': 'Управление спецпредложениями'
+    })
+
+@login_required
+def edit_special_offer(request, offer_id):
+    offer = get_object_or_404(SpecialOffer, id=offer_id)
+    if request.method == 'POST':
+        form = SpecialOfferForm(request.POST, request.FILES, instance=offer)
+        if form.is_valid():
+            try:
+                form.save()
+                messages.success(request, 'Спецпредложение успешно обновлено')
+                return redirect('manage_special_offers')
+            except Exception as e:
+                messages.error(request, f'Ошибка при обновлении: {str(e)}')
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'Ошибка в поле {field}: {error}')
+    else:
+        form = SpecialOfferForm(instance=offer)
+    
+    return render(request, 'news/edit_special_offer.html', {
+        'form': form,
+        'offer': offer,
+        'title': 'Редактирование спецпредложения'
     })
 
 def news_and_offers(request):
@@ -541,24 +552,6 @@ def delete_news(request, news_id):
     return render(request, 'news/delete_news.html', {
         'news_item': news_item,
         'title': 'Удаление новости'
-    })
-
-@login_required
-def edit_special_offer(request, offer_id):
-    offer = get_object_or_404(SpecialOffer, id=offer_id)
-    if request.method == 'POST':
-        form = SpecialOfferForm(request.POST, request.FILES, instance=offer)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Спецпредложение успешно обновлено')
-            return redirect('manage_special_offers')
-    else:
-        form = SpecialOfferForm(instance=offer)
-    
-    return render(request, 'news/edit_special_offer.html', {
-        'form': form,
-        'offer': offer,
-        'title': 'Редактирование спецпредложения'
     })
 
 @login_required

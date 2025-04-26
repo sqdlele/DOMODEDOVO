@@ -360,12 +360,12 @@ class SpecialOfferForm(forms.ModelForm):
         queryset=ServiceType.objects.all(),
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
         label="Выберите услуги для акции",
-        required=True
+        required=False  # Делаем необязательным для обратной совместимости
     )
 
     class Meta:
         model = SpecialOffer
-        fields = ['title', 'content', 'image', 'end_date', 'is_one_time', 'price', 'is_active', 'services']
+        fields = ['title', 'content', 'image', 'end_date', 'is_one_time', 'price', 'is_active']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
@@ -374,10 +374,7 @@ class SpecialOfferForm(forms.ModelForm):
                 'class': 'form-control',
                 'type': 'date'
             }),
-            'price': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'step': '0.01'
-            }),
+            'price': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
             'is_one_time': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
@@ -386,32 +383,49 @@ class SpecialOfferForm(forms.ModelForm):
         cleaned_data = super().clean()
         is_one_time = cleaned_data.get('is_one_time')
         end_date = cleaned_data.get('end_date')
-        price = cleaned_data.get('price')
-        services = cleaned_data.get('services')
+        services = cleaned_data.get('services', [])
 
-        # Проверка даты окончания для неодноразовых предложений
         if not is_one_time and not end_date:
             raise forms.ValidationError(
                 "Необходимо указать дату окончания акции для неодноразового предложения"
             )
-
-        # Проверка цены акции
-        if price and services:
-            invalid_services = []
-            for service in services:
-                if price >= service.price:
-                    invalid_services.append(
-                        f"{service.name} (текущая цена: {service.price}₽)"
-                    )
-            
-            if invalid_services:
-                raise forms.ValidationError(
-                    f"цена акции ({price}₽) должна быть меньше обычной цены следующих услуг:\n" +
-                    "\n".join(invalid_services)
-                )
-
+        
         return cleaned_data
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        instance = kwargs.get('instance')
+        
+        # Если редактируем существующее предложение, отметим выбранные услуги
+        if instance:
+            self.fields['services'].initial = instance.services.all()
+
+    def save(self, commit=True):
+        special_offer = super().save(commit=commit)
+        
+        if commit:
+            # Сначала очищаем все связи
+            special_offer.services.clear()
+            
+            # Затем добавляем выбранные услуги
+            services = self.cleaned_data.get('services', [])
+            for service in services:
+                # Используем промежуточную модель для добавления связи
+                from .models import ServiceSpecialOffer
+                ServiceSpecialOffer.objects.create(
+                    service=service,
+                    special_offer=special_offer,
+                    is_active=special_offer.is_active
+                )
+                
+                # Обновляем цены, если акция активна
+                if special_offer.is_active and special_offer.price:
+                    if not service.original_price:
+                        service.original_price = service.price
+                    service.price = special_offer.price
+                    service.save()
+        
+        return special_offer
     def save(self, commit=True):
         special_offer = super().save(commit=commit)
         if commit:

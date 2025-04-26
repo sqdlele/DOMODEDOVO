@@ -81,6 +81,24 @@
                     <div class="error-message">{{ form.is_active.errors }}</div>
                 {% endif %}
             </div>
+            
+            <!-- Выбор услуг для акции -->
+            <div class="form-group1">
+                <label for="{{ form.services.id_for_label }}">{{ form.services.label }}</label>
+                <div class="services-selection">
+                    {% for service in form.services %}
+                    <div class="checkbox-group">
+                        {{ service.tag }}
+                        <label for="{{ service.id_for_label }}">
+                            {{ service.choice_label }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% if form.services.errors %}
+                    <div class="error-message">{{ form.services.errors }}</div>
+                {% endif %}
+            </div>
 
             <button type="submit">Добавить спецпредложение</button>
         </form>
@@ -95,6 +113,7 @@
                     <th>Цена</th>
                     <th>Период</th>
                     <th>Статус</th>
+                    <th>Услуги</th>
                     <th>Действия</th>
                 </tr>
             </thead>
@@ -117,20 +136,64 @@
                             {% if offer.is_active %}Активно{% else %}Неактивно{% endif %}
                         </span>
                     </td>
+                    <td>
+                        {% for service in offer.services.all %}
+                            <span class="service-badge">{{ service.name }}</span>
+                        {% empty %}
+                            <span class="no-services">Нет связанных услуг</span>
+                        {% endfor %}
+                    </td>
                     <td class="action-buttons">
-                        <a href="{% url 'edit_news' news_item.id %}" class="btn-edit">Редактировать</a></button>
-                        <a href="{% url 'delete_news' news_item.id %}" class="btn-delete">Удалить</a>
+                        <a href="{% url 'edit_special_offer' offer.id %}" class="btn-edit">Редактировать</a>
+                        <a href="{% url 'delete_special_offer' offer.id %}" class="btn-delete">Удалить</a>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="5" style="text-align: center;">Нет добавленных спецпредложений</td>
+                    <td colspan="6" style="text-align: center;">Нет добавленных спецпредложений</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+
+<style>
+    .services-selection {
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-top: 5px;
+    }
+    
+    .service-badge {
+        display: inline-block;
+        background-color: #e1f5fe;
+        color: #0288d1;
+        padding: 2px 8px;
+        border-radius: 20px;
+        font-size: 0.85em;
+        margin-right: 5px;
+        margin-bottom: 5px;
+    }
+    
+    .no-services {
+        color: #757575;
+        font-style: italic;
+    }
+    
+    .image-preview {
+        display: none;
+        max-width: 100%;
+        max-height: 200px;
+        margin-top: 10px;
+    }
+    
+    .image-preview.show {
+        display: block;
+    }
+</style>
 
 <script>
     // Предпросмотр изображения
@@ -159,12 +222,14 @@
         }
     });
 
-    // Подтверждение удаления
-    function confirmDelete(offerId) {
-        if (confirm('Вы уверены, что хотите удалить это спецпредложение?')) {
-            // Здесь можно добавить AJAX-запрос на удаление
-            console.log('Удаление спецпредложения с ID:', offerId);
+    // При загрузке страницы проверяем состояние чекбокса
+    document.addEventListener('DOMContentLoaded', function() {
+        const oneTimeCheckbox = document.getElementById('{{ form.is_one_time.id_for_label }}');
+        const endDateField = document.getElementById('{{ form.end_date.id_for_label }}');
+        
+        if (oneTimeCheckbox && oneTimeCheckbox.checked) {
+            endDateField.disabled = true;
         }
-    }
+    });
 </script>
 {% endblock %}
