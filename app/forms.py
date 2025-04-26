@@ -426,18 +426,3 @@ class SpecialOfferForm(forms.ModelForm):
                     service.save()
         
         return special_offer
-    def save(self, commit=True):
-        special_offer = super().save(commit=commit)
-        if commit:
-            # Сохраняем оригинальные цены и устанавливаем акционные
-            services = self.cleaned_data.get('services')
-            if special_offer.is_active and special_offer.price:
-                for service in services:
-                    # Сохраняем оригинальную цену, если еще не сохранена
-                    if not service.original_price:
-                        service.original_price = service.price
-                    # Устанавливаем акционную цену
-                    service.price = special_offer.price
-                    service.save()
-
-        return special_offer
