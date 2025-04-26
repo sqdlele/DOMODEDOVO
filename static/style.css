@@ -2044,3 +2044,10 @@ input:-webkit-autofill:focus {
     font-size: 0.75em;
     padding: 0.25em 0.5em;
 }
+.services-selection {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 5px;
+}
