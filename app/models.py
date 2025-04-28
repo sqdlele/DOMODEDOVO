@@ -5,7 +5,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User, Group
 from django.db import transaction
 from django.utils import timezone
-
+from decimal import Decimal, ROUND_HALF_UP
 class Profile(models.Model):
     USER_ROLES = [
         ('client', 'Клиент'),
@@ -117,31 +117,10 @@ class ServiceType(models.Model):
     def discounted_price(self):
         offer = self.get_discount_offer()
         if offer and offer.discount_percent:
-            return round(self.price * (1 - offer.discount_percent/100), 2)
+            discount = Decimal(offer.discount_percent) / Decimal('100')
+            discounted = self.price * (Decimal('1') - discount)
+            return discounted.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
         return None
-
-class ServiceRecord(models.Model):
-    STATUS_CHOICES = [
-        ('pending', 'В ожидании'),
-        ('in_progress', 'В процессе'),
-        ('completed', 'Завершено'),
-        ('cancelled', 'Отменено')
-    ]
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь")
-    service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE, verbose_name="Тип услуги")
-    date = models.DateField(verbose_name="Дата")
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending', verbose_name="Статус")
-    cost = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Стоимость")
-    description = models.TextField(blank=True, null=True, verbose_name="Описание")
-    mileage_at_service = models.IntegerField(blank=True, null=True, verbose_name="Пробег")
-
-    def __str__(self):
-        return f"{self.service_type} - {self.date}"
-
-    class Meta:
-        verbose_name = "Запись об обслуживании"
-        verbose_name_plural = "Записи об обслуживании"
 
 class Appointment(models.Model):
     STATUS_CHOICES = [

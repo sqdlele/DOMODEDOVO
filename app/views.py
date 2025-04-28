@@ -8,7 +8,7 @@ from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib import messages
 from .forms import RegisterForm, LoginForm, ProfileForm, AppointmentForm, ReviewForm, SpecialOfferForm, NewsForm
-from .models import Profile, ServiceType, ServiceRecord, Appointment, Review, SpecialOffer, News
+from .models import Profile, ServiceType, Appointment, Review, SpecialOffer, News
 from django.utils import timezone
 from datetime import datetime, date, time
 from django.contrib.auth import update_session_auth_hash

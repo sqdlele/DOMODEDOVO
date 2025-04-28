@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
-from .models import Profile, Appointment, ServiceType, Review, News, SpecialOffer
+from .models import Profile, Appointment, ServiceType, Review, News, SpecialOffer, ServiceSpecialOffer
 from datetime import datetime, time
 from django.core.exceptions import ValidationError
 from django.utils import timezone

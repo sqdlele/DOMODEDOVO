@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Profile, ServiceType, ServiceRecord, Appointment, Image, Review, SpecialOffer, News
+from .models import Profile, ServiceType, Appointment, Image, Review, SpecialOffer, News
 
 
 admin.site.site_title = "Администрирование DOMODEDOVO"
@@ -57,22 +57,6 @@ class ServiceTypeAdmin(admin.ModelAdmin):
     def get_description(self, obj):
         return obj.description[:100] + '...' if len(obj.description) > 100 else obj.description
     get_description.short_description = 'Описание'
-
-@admin.register(ServiceRecord)
-class ServiceRecordAdmin(admin.ModelAdmin):
-    list_display = ('service_type', 'date', 'status', 'cost', 'mileage_at_service')
-    list_filter = ('status', 'date', 'service_type')
-    search_fields = ('description',)
-    date_hierarchy = 'date'
-
-    fieldsets = (
-        ('Основная информация', {
-            'fields': ('service_type', 'date', 'status')
-        }),
-        ('Детали обслуживания', {
-            'fields': ('cost', 'description', 'mileage_at_service')
-        }),
-    )
 
 @admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
