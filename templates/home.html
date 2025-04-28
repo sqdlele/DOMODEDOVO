@@ -3,7 +3,7 @@
 
 {% block content %}
 
-        <div class="container slider" > 
+        <div class="container slider" >
             <div>
               <span class="slider-text1"></span>
                 <span class="slider-model">
@@ -15,14 +15,14 @@
                     <a class="btn-slide">></a>
                 </button>
                 <img src="static/img/ai_image.jpg" alt="Изображение 1" class="slide">
-                <img src="static/img/image2.jpg" alt="Изображение 2" class="slide"> 
-                <img src="static/img/ai_image3.jpg" alt="Изображение 3" class="slide"> 
+                <img src="static/img/image2.jpg" alt="Изображение 2" class="slide">
+                <img src="static/img/ai_image3.jpg" alt="Изображение 3" class="slide">
             </div>
         </div>
         <script>
             let currentIndex = 0;
             const slides = document.querySelectorAll('.slide');
-            const slideInterval = 5000; 
+            const slideInterval = 5000;
             function initSlides() {
                 slides.forEach((slide, index) => {
                     slide.style.opacity = 0;
@@ -30,7 +30,7 @@
                 });
                 slides[0].style.opacity = 1;
             }
-            
+
             function changeSlide() {
                 slides[currentIndex].style.opacity = 0;
                 currentIndex = (currentIndex + 1) % slides.length;
@@ -38,7 +38,7 @@
                     slides[currentIndex].style.opacity = 1;
                 }, 800);
             }
-        
+
             window.addEventListener('DOMContentLoaded', () => {
                 initSlides();
                 setInterval(changeSlide, slideInterval);
@@ -65,7 +65,7 @@
                                 {% if offer.price %}
                                     <div class="offer-price">{{ offer.price }} ₽</div>
                                 {% endif %}
-                                <button class="offer-button" onclick="location.href='{% url 'make_appointment' %}'">Записаться</button>
+                                <button class="offer-button" onclick="location.href='{% url 'services' %}'">Записаться</button>
                             </div>
                         </div>
                         {% empty %}
@@ -78,7 +78,7 @@
                         {% endfor %}
                     </div>
                 </div>
-        
+
                 <!-- Секция новостей -->
                 <div class="news-section">
                     <h2>Новости</h2>
@@ -106,7 +106,7 @@
                 </div>
             </div>
         </div>
-        
+
         <script>
             $(document).ready(function(){
                 // Инициализация карусели для спецпредложений (только 1 карточка на экране)
@@ -119,7 +119,7 @@
                     dots: false,
 
                 });
-        
+
                 // Инициализация карусели для новостей (также 1 карточка на экране)
                 $('.news-carousel').slick({
                     slidesToShow: 1,
@@ -170,7 +170,7 @@
                         <p>Обеспечивать безопасность и комфорт наших клиентов на дороге, предоставляя профессиональное обслуживание автомобилей по честным ценам.</p>
                     </div>
                     <div class="about-cta">
-                        <button class="primary-button" onclick="location.href=''">Записаться на обслуживание</button>
+                        <button class="primary-button" onclick="location.href='{% url 'services' %}'">Записаться на обслуживание</button>
                         <button class="secondary-button" onclick="location.href='{% url 'profile' %}'">Личный кабинет</button>
                     </div>
                 </div>
@@ -183,7 +183,7 @@
                 <h3 style="text-align:center;">Средняя оценка: {{ average_rating|floatformat:1 }} из 5</h3>
             </div>
             {% endif %}
-            
+
             <div class="reviews-slider">
                 <button class="slider-arrow prev-arrow">❮</button>
                 <div class="reviews-container">
@@ -207,19 +207,6 @@
                                     {% for service in review.appointment.service_type.all %}
                                         <div class="service-item">
                                             <span style="padding-left:20px;">Услуга: {{ service.name }}</span>
-                                            <div class="service-price">
-                                                {% if service.has_discount %}
-                                                    <span class="original-price text-muted text-decoration-line-through">
-                                                        {{ service.original_price }}₽
-                                                    </span>
-                                                    <span class="special-price text-success">
-                                                        {{ service.current_price }}₽
-                                                    </span>
-                                                    <span class="badge bg-danger">Акция!</span>
-                                                {% else %}
-                                                    <span class="price">{{ service.price }}₽</span>
-                                                {% endif %}
-                                            </div>
                                         </div>
                                     {% endfor %}
                                 </div>
@@ -238,7 +225,7 @@
             </div>
             <div class="reviews-dots"></div>
         </div>
-    
+
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const container = document.querySelector('.reviews-container');
@@ -251,7 +238,7 @@
 
                 let currentSlide = 0;
                 const slidesToShow = window.innerWidth < 768 ? 1 : 2;
-                
+
                 if (reviewSlides.length === 1) {
                     reviewsContainer.classList.add('single-review');
                 }
@@ -266,7 +253,7 @@
                         dotsContainer.appendChild(dot);
                     }
                 });
-                
+
                 function updateDots() {
                     const dots = document.querySelectorAll('.dot');
                     dots.forEach((dot, index) => {
@@ -276,43 +263,43 @@
                         }
                     });
                 }
-                
+
                 function goToSlide(index) {
                     currentSlide = index;
                     const offset = -(currentSlide * (100 / slidesToShow));
                     container.style.transform = `translateX(${offset}%)`;
                     updateDots();
                 }
-                
+
                 prevButton.addEventListener('click', () => {
                     if (currentSlide > 0) {
                         goToSlide(currentSlide - slidesToShow);
                     }
                 });
-                
+
                 nextButton.addEventListener('click', () => {
                     if (currentSlide < slides.length - slidesToShow) {
                         goToSlide(currentSlide + slidesToShow);
                     }
                 });
-                
+
                 // Обработка свайпов для мобильных устройств
                 let touchStartX = 0;
                 let touchEndX = 0;
-                
+
                 container.addEventListener('touchstart', e => {
                     touchStartX = e.changedTouches[0].screenX;
                 });
-                
+
                 container.addEventListener('touchend', e => {
                     touchEndX = e.changedTouches[0].screenX;
                     handleSwipe();
                 });
-                
+
                 function handleSwipe() {
                     const swipeThreshold = 50;
                     const diff = touchStartX - touchEndX;
-                    
+
                     if (Math.abs(diff) > swipeThreshold) {
                         if (diff > 0 && currentSlide < slides.length - slidesToShow) {
                             goToSlide(currentSlide + slidesToShow);
@@ -336,14 +323,14 @@
                             <p>Сб-Вс: 8:00 - 22:00</p>
                         </div>
                     </div>
-                    
+
                     <div class="info-block">
                         <h3>Связаться с нами</h3>
                         <p><i class="fas fa-phone"></i> +7 (999) 123-45-67</p>
                         <p><i class="fas fa-envelope"></i> info@domodedovo-auto.ru</p>
                     </div>
                 </div>
-    
+
                 <div class="map-container">
                     <div style="position:relative; overflow:hidden; height:100%; "><iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Aee96a8ea156e22f4a5b2cdfb664fa9d0e6b05b3485df4b3db4b6ef6ad24a17cb&amp;source=constructor" width="100%" height="100%" frameborder="0" allowfullscreen="true" style="position:relative;"></iframe></div>
                 </div>
@@ -351,46 +338,46 @@
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const phoneInput = document.getElementById('phone');
-                    
+
                     function maskPhone(event) {
                         let matrix = '+7 (___) ___-__-__',
                             i = 0,
                             def = matrix.replace(/\D/g, ''),
                             val = this.value.replace(/\D/g, '');
-                        
+
                         if (def.length >= val.length) val = def;
-                        
+
                         this.value = matrix.replace(/./g, function(a) {
-                            return /[_\d]/.test(a) && i < val.length 
-                                ? val.charAt(i++) 
-                                : i >= val.length 
-                                    ? '' 
+                            return /[_\d]/.test(a) && i < val.length
+                                ? val.charAt(i++)
+                                : i >= val.length
+                                    ? ''
                                     : a;
                         });
                     }
-                    
+
                     phoneInput.addEventListener('input', maskPhone);
                     phoneInput.addEventListener('focus', maskPhone);
                     phoneInput.addEventListener('blur', maskPhone);
                 });
-        
+
                 // Обработка отправки формы
                 document.getElementById('contactForm').addEventListener('submit', function(e) {
                     e.preventDefault();
-                    
+
                     // Здесь будет код отправки формы на сервер
                     alert('Спасибо за заявку! Мы свяжемся с вами в ближайшее время.');
                     this.reset();
                 });
             </script>
         </div>
-    
-        
-    
 
 
-        
 
-        
+
+
+
+
+
 {% endblock %}
 

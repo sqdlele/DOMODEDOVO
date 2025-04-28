@@ -1,0 +1,46 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+<div class="management-container">
+    <div class="form-card">
+        <h3 style="text-align:center;margin-bottom:20px;">Удалить спецпредложение</h3>
+        <form method="post" class="management-form" style="text-align:center;">
+            {% csrf_token %}
+            <p>Вы уверены, что хотите удалить спецпредложение <strong>"{{ offer.title }}"</strong>?</p>
+            <button type="submit" class="btn-delete" style="margin-right:10px;">Удалить</button>
+            <a href="{% url 'manage_special_offers' %}" class="btn-cancel">Отмена</a>
+        </form>
+    </div>
+</div>
+<style>
+    .form-card {
+        background: #gray;
+        border-radius: 10px;
+        box-shadow: 0 0 16px #e3e7ee;
+        padding: 30px;
+        margin: 55px auto 55px auto;
+        max-width: 420px;
+    }
+    .btn-delete {
+        background: #e53935;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 8px 20px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .btn-cancel {
+        background: #e3e7ee;
+        color: #444;
+        border: none;
+        border-radius: 6px;
+        padding: 8px 18px;
+        margin-left:10px;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .btn-delete:hover { background: #ba1713;}
+    .btn-cancel:hover { background: #d7dbe5;}
+</style>
+{% endblock %}

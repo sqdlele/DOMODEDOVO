@@ -23379,3 +23379,687 @@ INFO 2025-04-26 14:47:28,183 autoreload 704 21496 G:\cursovaya\cursovaya\proect7
 INFO 2025-04-26 14:47:29,515 autoreload 2948 11688 Watching for file changes with StatReloader
 INFO 2025-04-26 14:47:30,190 basehttp 2948 15792 "GET /chat/get_messages/ HTTP/1.1" 200 16
 INFO 2025-04-26 14:47:33,191 basehttp 2948 15792 "GET /chat/get_messages/ HTTP/1.1" 200 16
+ERROR 2025-04-26 13:59:46,424 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 13:59:46,613 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 13:59:46,614 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 13:59:46,635 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 13:59:47,186 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 13:59:47,209 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 13:59:49,187 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 13:59:49,217 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 13:59:50,198 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 13:59:50,244 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 13:59:52,198 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 13:59:52,234 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 13:59:53,190 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 13:59:53,213 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 13:59:55,182 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 13:59:55,203 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 13:59:56,195 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 13:59:56,217 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 13:59:58,190 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 13:59:58,210 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 13:59:59,192 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 13:59:59,223 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:01,182 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:01,204 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:02,202 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:02,256 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:04,185 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:04,222 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:05,193 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:05,215 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:07,187 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:07,222 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:08,188 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:08,213 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:10,184 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:10,205 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:11,194 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:11,216 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:13,199 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:13,223 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:14,195 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:14,218 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:16,186 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:16,251 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:17,181 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:17,217 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:19,194 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:19,250 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:20,188 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:20,218 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:22,200 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:22,222 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:23,188 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:23,225 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:25,200 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:25,222 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:26,189 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:26,210 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:28,182 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:28,203 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:29,212 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:29,233 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:31,189 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:31,210 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:32,199 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:32,236 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:34,185 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:34,206 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:35,184 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:35,205 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:00:52,579 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:00:52,604 log 2 131060827400064 Bad Request: /
+ERROR 2025-04-26 14:01:10,201 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:01:10,222 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:01:10,710 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:01:10,741 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:02:10,196 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:02:10,221 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:02:10,222 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:02:10,242 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:03:10,200 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:03:10,250 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:03:10,252 exception 2 131060827400064 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:03:10,287 log 2 131060827400064 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:03:58,802 exception 2 123822500845440 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:03:58,928 log 2 123822500845440 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:03:58,930 exception 2 123822500845440 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:03:58,954 log 2 123822500845440 Bad Request: /
+ERROR 2025-04-26 14:04:00,422 exception 2 123822500845440 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:04:00,456 log 2 123822500845440 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:04:01,058 exception 2 123822500845440 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:04:01,080 log 2 123822500845440 Bad Request: /offers/manage/
+ERROR 2025-04-26 14:04:10,202 exception 2 123822500845440 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:04:10,228 log 2 123822500845440 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:05:10,196 exception 2 123822500845440 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:05:10,221 log 2 123822500845440 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:06:10,189 exception 2 123822500845440 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:06:10,212 log 2 123822500845440 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:07:10,203 exception 2 123822500845440 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:07:10,229 log 2 123822500845440 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:08:10,201 exception 2 123822500845440 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:08:10,241 log 2 123822500845440 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:09:10,197 exception 2 123822500845440 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:09:10,219 log 2 123822500845440 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:10:10,202 exception 2 123822500845440 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:10:10,227 log 2 123822500845440 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:11:10,196 exception 2 123822500845440 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:11:10,225 log 2 123822500845440 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:12:10,203 exception 2 123822500845440 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:12:10,241 log 2 123822500845440 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:13:10,189 exception 2 123822500845440 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:13:10,238 log 2 123822500845440 Bad Request: /chat/get_messages/
+ERROR 2025-04-26 14:13:29,833 exception 2 123822500845440 Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sezzxxq/cursovaya/myvenv/lib/python3.13/site-packages/django/http/request.py", line 186, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'sezzxxq.pythonanywhere.com'. You may need to add 'sezzxxq.pythonanywhere.com' to ALLOWED_HOSTS.
+WARNING 2025-04-26 14:13:29,864 log 2 123822500845440 Bad Request: /offers/manage/

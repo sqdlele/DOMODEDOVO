@@ -27,11 +27,11 @@ SECRET_KEY = 'django-insecure-ewhgt3u)og&@c9w89nz@+%ng19z3qu6vf%^hsq_zfvx141+4w^
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    #'www.sezzxxq.pythonanywhere.com',
-    #'sezzxxq.pythonanywhere.com',
-    '127.0.0.1'
-    
+    'www.sezzxxq.pythonanywhere.com',
+    'sezzxxq.pythonanywhere.com',
+
 ]
+
 
 # Application definition
 
@@ -96,14 +96,22 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-# Дополнительные настройки для правильной работы с социальными аккаунтами
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
-SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
-SOCIALACCOUNT_EMAIL_REQUIRED = True
-SOCIALACCOUNT_AUTO_SIGNUP = True
+# Комментируем устаревшие настройки
+# ACCOUNT_AUTHENTICATION_METHOD = "email"  # устарело
+# ACCOUNT_EMAIL_REQUIRED = True  # устарело
+# ACCOUNT_USERNAME_REQUIRED = False  # устарело
+
+# Добавляем новые настройки
+ACCOUNT_LOGIN_METHODS = {'email'}  # Новая настройка вместо ACCOUNT_AUTHENTICATION_METHOD
+
+# Новая настройка вместо ACCOUNT_EMAIL_REQUIRED и ACCOUNT_USERNAME_REQUIRED
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
+
+# Другие настройки allauth, которые могут у вас быть:
+ACCOUNT_EMAIL_VERIFICATION = 'optional'  # Или какое другое значение у вас было
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/accounts/login/'
+ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
 
 # URLs после авторизации
 LOGIN_REDIRECT_URL = '/profile'  # Куда перенаправлять после успешного входа
@@ -176,12 +184,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    BASE_DIR / "static",  # если у вас есть папка static в корне проекта
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
+STATIC_ROOT = BASE_DIR / "staticfiles"  # для collectstatic
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -192,42 +200,5 @@ LOGIN_URL = 'login'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
-        },
-        'file': {
-            'class': 'logging.FileHandler',
-            'filename': 'debug.log',
-            'formatter': 'verbose',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console', 'file'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-        'chat': {
-            'handlers': ['console', 'file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-}
 
 

@@ -14,7 +14,7 @@ from datetime import datetime, date, time
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
 from allauth.socialaccount.models import SocialAccount
-    
+
 @login_required
 def get_available_times(request):
     date_str = request.GET.get('date')
@@ -24,33 +24,33 @@ def get_available_times(request):
     try:
         selected_date = datetime.strptime(date_str, '%Y-%m-%d').date()
         now = timezone.localtime()
-        
+
         # Определяем рабочие часы в зависимости от дня недели
         weekday = selected_date.weekday()
-        if weekday >= 5:  
-            working_hours = range(8, 19) 
-        else: 
-            working_hours = range(8, 21) 
-        
+        if weekday >= 5:
+            working_hours = range(8, 19)
+        else:
+            working_hours = range(8, 21)
+
         all_times = [f'{i:02d}:00' for i in working_hours]
 
         booked_times = Appointment.objects.filter(
             date=selected_date,
-            status__in=['pending', 'confirmed'] 
+            status__in=['pending', 'confirmed']
         ).values_list('time', flat=True)
-        
+
         booked_times_str = [t.strftime('%H:00') for t in booked_times]
 
         available_times = [t for t in all_times if t not in booked_times_str]
-        
+
         if selected_date == now.date():
             current_hour = now.hour
-            available_times = [t for t in available_times 
+            available_times = [t for t in available_times
                              if int(t.split(':')[0]) > current_hour]
-        
+
         return JsonResponse({
             'available_times': available_times,
-            'is_weekend': weekday >= 5 
+            'is_weekend': weekday >= 5
         })
     except ValueError:
         return JsonResponse({'error': 'Invalid date format'}, status=400)
@@ -58,7 +58,7 @@ def get_available_times(request):
 def make_appointment(request):
     service_id = request.GET.get('service_id')
     selected_service = None
-    
+
     if service_id:
         try:
             selected_service = ServiceType.objects.get(id=service_id)
@@ -68,30 +68,30 @@ def make_appointment(request):
 
     if request.method == 'POST':
         form = AppointmentForm(
-            request.POST, 
+            request.POST,
             user=request.user,
             selected_service=selected_service
         )
-        
+
         if form.is_valid():
             try:
                 appointment = form.save(commit=False)
                 appointment.user = request.user
                 appointment.status = 'pending'
-                
+
                 # Обновляем телефон в профиле если указан
                 phone = form.cleaned_data.get('phone')
                 if phone and not request.user.profile.phone:
                     profile = request.user.profile
                     profile.phone = phone
                     profile.save()
-                
+
                 appointment.save()
-                
+
                 # Сохраняем связь с услугой
                 if selected_service:
                     appointment.service_type.add(selected_service)
-                
+
                 messages.success(request, 'Запись успешно создана')
                 return redirect('appointment_success')
 
@@ -115,21 +115,21 @@ def make_appointment(request):
         'title': 'Запись на обслуживание',
         'show_phone_field': not request.user.profile.phone
     }
-    
+
     return render(request, 'appointments/make_appointment.html', context)
 
-    
-@csrf_exempt  
+
+@csrf_exempt
 def auth_view(request):
-    if 'HTTP_AUTHORIZATION' in request.META:  
+    if 'HTTP_AUTHORIZATION' in request.META:
         auth_header = request.META['HTTP_AUTHORIZATION']
-        if auth_header == 'Token token':  
+        if auth_header == 'Token token':
             return JsonResponse({'message': 'Авторизация через header успешна!'})
         else:
             return HttpResponse('Неверный токен', status=401)
-    elif 'token' in request.GET:  
+    elif 'token' in request.GET:
         token = request.GET.get('token')
-        if token == 'token': 
+        if token == 'token':
             return JsonResponse({'message': 'Авторизация через параметр URL успешна!'})
         else:
             return HttpResponse('Неверный токен в URL', status=401)
@@ -140,7 +140,7 @@ def home(request):
     # Получаем активные новости и спецпредложения
     special_offers = SpecialOffer.objects.filter(is_active=True).order_by('-created_at')
     news = News.objects.filter(is_active=True).order_by('-date')
-    
+
     # Получаем последние отзывы с информацией о ценах
     reviews = Review.objects.select_related(
         'user',
@@ -153,14 +153,15 @@ def home(request):
     for review in reviews:
         # Добавляем информацию о ценах для каждой услуги в отзыве
         for service in review.appointment.service_type.all():
-            service.current_price = service.get_actual_price()
-            if hasattr(service, 'original_price') and service.original_price:
+            if service.discounted_price:
+                service.current_price = service.discounted_price
                 service.has_discount = True
             else:
+                service.current_price = service.price
                 service.has_discount = False
-    
+
     average_rating = reviews.aggregate(Avg('rating'))['rating__avg']
-    
+
     context = {
         'special_offers': special_offers,
         'news': news,
@@ -168,8 +169,8 @@ def home(request):
         'average_rating': average_rating,
         'title': 'Главная'
     }
-    
-    return render(request, 'home.html', context)  
+
+    return render(request, 'home.html', context)
 
 def header(request):
     return render(request, 'header.html')
@@ -179,33 +180,33 @@ def appointment_success(request):
     return render(request, 'appointments/appointment_success.html', {
         'title': 'Запись успешно создана'
     })
-        
+
 def services_view(request):
     # Получаем поисковый запрос
     search_query = request.GET.get('search', '').strip()
     services = ServiceType.objects.all()
-    
+
     # Если есть поисковый запрос
     if search_query:
         # Разбиваем запрос на отдельные слова
         search_words = search_query.split()
         # Создаем пустой Q-объект
         query = Q()
-        
+
         # Добавляем условие для каждого слова
         for word in search_words:
             query |= Q(name__icontains=word)
-        
+
         # Применяем фильтр
         services = services.filter(query).distinct()
-    
+
     # Группируем по категориям
     services_by_category = {}
     for service in services.order_by('category'):
         if service.category not in services_by_category:
             services_by_category[service.category] = []
         services_by_category[service.category].append(service)
-    
+
     return render(request, 'services/services.html', {
         'services_by_category': services_by_category,
         'query': search_query,
@@ -255,24 +256,24 @@ def login_view(request):
 
 @login_required
 def logout_view(request):
-    logout(request)  
+    logout(request)
     return redirect('home')
 
 def profile_view(request):
     user = request.user
-    
+
     try:
         google_account = SocialAccount.objects.get(user=request.user, provider='google')
         google_data = google_account.extra_data
     except SocialAccount.DoesNotExist:
         google_data = None
-        
+
     # Получаем активные записи
     appointments = Appointment.objects.filter(
         user=user,
         status__in=['pending', 'confirmed']
     ).order_by('-date', '-time')
-    
+
     # Получаем завершенные записи
     service_records = Appointment.objects.filter(
         user=user,
@@ -281,16 +282,16 @@ def profile_view(request):
         'service_type',
         'review'
     ).order_by('-date', '-time')
-    
+
     context = {
         'google_data': google_data,
         'user': user,
         'appointments': appointments,
         'service_records': service_records,
         'title': 'Личный кабинет'
-        
+
     }
-    
+
     return render(request, 'profile.html', context)
 
 @login_required
@@ -305,11 +306,11 @@ def edit_profile(request):
         if User.objects.exclude(pk=user.pk).filter(username=username).exists():
             messages.error(request, 'Это имя пользователя уже занято')
             return redirect('edit_profile')
-        
+
         if User.objects.exclude(pk=user.pk).filter(email=email).exists():
             messages.error(request, 'Этот email уже используется')
             return redirect('edit_profile')
-        
+
 
         user.username = username
         user.email = email
@@ -323,7 +324,7 @@ def edit_profile(request):
         current_password = request.POST.get('current_password')
         new_password = request.POST.get('new_password')
         confirm_password = request.POST.get('confirm_password')
-        
+
         if current_password and new_password and confirm_password:
             if user.check_password(current_password):
                 if new_password == confirm_password:
@@ -337,10 +338,10 @@ def edit_profile(request):
             else:
                 messages.error(request, 'Неверный текущий пароль')
                 return redirect('edit_profile')
-        
+
         messages.success(request, 'Профиль успешно обновлен')
         return redirect('profile')
-        
+
     return render(request, 'edit_profile.html', {
         'title': 'Редактирование профиля'
     })
@@ -370,25 +371,25 @@ def cancel_appointment(request, appointment_id):
 @login_required
 def service_history(request):
     service_records = ServiceRecord.objects.filter().order_by('-date')
-    
+
     return render(request, 'service/service_history.html', {
         'service_records': service_records,
         'title': 'История обслуживания'
     })
 
 @login_required
-def create_review(request, appointment_id):  
+def create_review(request, appointment_id):
     appointment = get_object_or_404(Appointment, id=appointment_id, user=request.user)
-    
+
     if appointment.status != 'completed':
         messages.error(request, 'Отзыв можно оставить только для завершенной услуги')
         return redirect('profile')
-    
+
     # Проверяем, существует ли уже отзыв
     if Review.objects.filter(appointment=appointment).exists():
         messages.error(request, 'Вы уже оставили отзыв для этой услуги')
         return redirect('profile')
-    
+
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
@@ -397,7 +398,7 @@ def create_review(request, appointment_id):
                 review.user = request.user
                 review.appointment = appointment
                 review.save()
-                
+
                 messages.success(request, 'Спасибо за ваш отзыв!')
                 return redirect('profile')
             except Exception as e:
@@ -408,7 +409,7 @@ def create_review(request, appointment_id):
                     messages.error(request, error)
     else:
         form = ReviewForm()
-    
+
     context = {
         'form': form,
         'appointment': appointment,
@@ -435,7 +436,7 @@ def get_reviews(request):
                 service.has_discount = False
 
     average_rating = reviews.aggregate(Avg('rating'))['rating__avg']
-    
+
     context = {
         'reviews': reviews,
         'average_rating': average_rating,
@@ -453,7 +454,7 @@ def manage_news(request):
             return redirect('manage_news')
     else:
         form = NewsForm()
-    
+
     news_list = News.objects.all()
     return render(request, 'news/manage_news.html', {
         'form': form,
@@ -478,9 +479,9 @@ def manage_special_offers(request):
                     messages.error(request, f'Ошибка в поле {field}: {error}')
     else:
         form = SpecialOfferForm()
-    
+
     offers = SpecialOffer.objects.prefetch_related('services').all()
-    
+
     return render(request, 'news/manage_special_offers.html', {
         'form': form,
         'offers': offers,
@@ -505,7 +506,7 @@ def edit_special_offer(request, offer_id):
                     messages.error(request, f'Ошибка в поле {field}: {error}')
     else:
         form = SpecialOfferForm(instance=offer)
-    
+
     return render(request, 'news/edit_special_offer.html', {
         'form': form,
         'offer': offer,
@@ -515,7 +516,7 @@ def edit_special_offer(request, offer_id):
 def news_and_offers(request):
     special_offers = SpecialOffer.objects.filter(is_active=True)
     news = News.objects.filter(is_active=True)
-    
+
     context = {
         'special_offers': special_offers,
         'news': news,
@@ -534,7 +535,7 @@ def edit_news(request, news_id):
             return redirect('manage_news')
     else:
         form = NewsForm(instance=news_item)
-    
+
     return render(request, 'news/edit_news.html', {
         'form': form,
         'news_item': news_item,
@@ -548,7 +549,7 @@ def delete_news(request, news_id):
         news_item.delete()
         messages.success(request, 'Новость успешно удалена')
         return redirect('manage_news')
-    
+
     return render(request, 'news/delete_news.html', {
         'news_item': news_item,
         'title': 'Удаление новости'
@@ -561,7 +562,7 @@ def delete_special_offer(request, offer_id):
         offer.delete()
         messages.success(request, 'Спецпредложение успешно удалено')
         return redirect('manage_special_offers')
-    
+
     return render(request, 'news/delete_special_offer.html', {
         'offer': offer,
         'title': 'Удаление спецпредложения'

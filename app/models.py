@@ -4,21 +4,22 @@ from django.dispatch import receiver
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User, Group
 from django.db import transaction
+from django.utils import timezone
 
 class Profile(models.Model):
     USER_ROLES = [
         ('client', 'Клиент'),
         ('support', 'Поддержка'),
     ]
-    
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=18, blank=True, null=True, verbose_name="Телефон")
     address = models.CharField(max_length=255, blank=True, null=True, verbose_name="Адрес")
     role = models.CharField(max_length=20, choices=USER_ROLES, default='client', verbose_name="Роль")
-    
+
     def __str__(self):
         return f"Профиль {self.user.username}"
-    
+
     class Meta:
         verbose_name = "Профиль"
         verbose_name_plural = "Профили"
@@ -38,7 +39,7 @@ class Profile(models.Model):
     def make_client(self):
         self.role = 'client'
         self.save()
-        
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     """
@@ -48,7 +49,7 @@ def create_user_profile(sender, instance, created, **kwargs):
         with transaction.atomic():
             # Создаем профиль
             Profile.objects.create(user=instance)
-            
+
             # Добавляем в группу клиентов только если это не пользователь поддержки
             if not hasattr(instance, 'profile') or instance.profile.role != 'support':
                 client_group, _ = Group.objects.get_or_create(name='Clients')
@@ -66,7 +67,7 @@ def handle_user_roles(sender, instance, **kwargs):
                 # Получаем или создаем группы
                 support_group, _ = Group.objects.get_or_create(name='Support')
                 client_group, _ = Group.objects.get_or_create(name='Clients')
-                
+
                 # Управляем группами и правами
                 if instance.role == 'support':
                     # Очищаем все группы перед добавлением
@@ -78,7 +79,7 @@ def handle_user_roles(sender, instance, **kwargs):
                     instance.user.groups.clear()
                     instance.user.groups.add(client_group)
                     instance.user.is_staff = False
-                
+
                 instance.user.save()
         finally:
             handle_user_roles.is_running = False
@@ -89,35 +90,35 @@ class ServiceType(models.Model):
         ('Ремонт', 'Ремонт'),
         ('ТО', 'ТО'),
     ]
-    
+
     name = models.CharField(max_length=100, verbose_name="Название услуги")
     description = models.TextField(verbose_name="Описание")
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Ц��на")
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
     category = models.CharField(max_length=50, choices=CATEGORIES, verbose_name="Категория")
     image = models.ImageField(upload_to='services/', null=True, blank=True, verbose_name="Изображение")
     original_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, verbose_name="Оригинальная цена")
-    
+
     class Meta:
         verbose_name = "Услуга"
         verbose_name_plural = "Услуги"
         ordering = ['category', 'name']
-    
+
     def __str__(self):
         return f"{self.category} - {self.name}"
 
-    def get_actual_price(self):
-        """Получение актуальной цены с учетом действующих акций"""
-        active_offer = self.special_offers.filter(
-            servicespecialoffer__is_active=True
-        ).first()
-        return active_offer.price if active_offer else self.price
+    def get_discount_offer(self):
+        today = timezone.now().date()
+        return self.special_offers.filter(
+            is_active=True,
+            end_date__gte=today
+        ).order_by('-discount_percent').first()
 
-    def restore_original_price(self):
-        """Восстановление оригинальной цены"""
-        if self.original_price:
-            self.price = self.original_price
-            self.original_price = None
-            self.save()
+    @property
+    def discounted_price(self):
+        offer = self.get_discount_offer()
+        if offer and offer.discount_percent:
+            return round(self.price * (1 - offer.discount_percent/100), 2)
+        return None
 
 class ServiceRecord(models.Model):
     STATUS_CHOICES = [
@@ -166,7 +167,7 @@ class Appointment(models.Model):
         verbose_name_plural = "Записи на приём"
         ordering = ['-date', '-time']
 
-    
+
 class Image(models.Model):
     image = models.ImageField(upload_to='images/')
 
@@ -174,7 +175,7 @@ class Image(models.Model):
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь")
     appointment = models.OneToOneField(
-        Appointment, 
+        Appointment,
         on_delete=models.CASCADE,
         related_name='review',
         verbose_name="Запись на приём"
@@ -185,21 +186,19 @@ class Review(models.Model):
     )
     comment = models.TextField(verbose_name="Комментарий")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
-    
+
     class Meta:
         verbose_name = "Отзыв"
         verbose_name_plural = "Отзывы"
         ordering = ['-created_at']
-    
+
     def __str__(self):
         return f"Отзыв от {self.user.username} - {self.rating}★"
 
 class SupportUserManager:
     @staticmethod
     def create_support_user(username, email, password, **extra_fields):
-        """
-        Creates a support user with the given credentials and profile
-        """
+
         with transaction.atomic():
             # Create base user with is_staff=True
             user = User.objects.create_user(
@@ -209,27 +208,27 @@ class SupportUserManager:
                 is_staff=True,
                 **extra_fields
             )
-            
+
             # Очищаем все группы (на всякий случай)
             user.groups.clear()
-            
+
             # Создаем или получаем группу Support
             support_group, _ = Group.objects.get_or_create(name='Support')
-            
+
             # Добавляем пользователя в группу Support
             user.groups.add(support_group)
-            
+
             # Обновляем роль профиля
             profile = user.profile
             profile.role = 'support'
             profile.save()
-            
+
             # Повторно сохраняем пользователя, чтобы убедиться, что is_staff установлен
             user.is_staff = True
             user.save()
-            
+
             return user
-        
+
 class News(models.Model):
     title = models.CharField(max_length=200, verbose_name="Заголовок")
     content = models.TextField(verbose_name="Содержание")
@@ -244,14 +243,14 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
-    
+
 class SpecialOffer(models.Model):
     title = models.CharField(max_length=200, verbose_name="Заголовок")
     content = models.TextField(verbose_name="Содержание")
     image = models.ImageField(upload_to='offers/', verbose_name="Изображение")
     end_date = models.DateField(verbose_name="Дата окончания акции", null=True, blank=True)
     is_one_time = models.BooleanField(default=False, verbose_name="Одноразовое предложение")
-    price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, verbose_name="Цена")
+    discount_percent = models.PositiveIntegerField("Скидка (%)", null=True, blank=True)
     is_active = models.BooleanField(default=True, verbose_name="Активно")
     created_at = models.DateTimeField(auto_now_add=True)
     services = models.ManyToManyField(
@@ -269,16 +268,13 @@ class SpecialOffer(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        if self.is_active and self.price is not None:
-            service_offers = ServiceSpecialOffer.objects.filter(special_offer=self)
-            for service_offer in service_offers:
-                service = service_offer.service
-                if not service.original_price:
-                    service.original_price = service.price
-                service.price = self.price
-                service.save()
+    @property
+    def period_display(self):
+        if self.is_one_time:
+            return "Одноразовое предложение"
+        elif self.end_date:
+            return f"До {self.end_date.strftime('%d %B')}"
+        return "Бессрочная акция"
 
     def deactivate(self):
         self.is_active = False
@@ -291,14 +287,6 @@ class SpecialOffer(models.Model):
                 service.original_price = None
                 service.save()
 
-    @property
-    def period_display(self):
-        if self.is_one_time:
-            return "Одноразовое предложение"
-        elif self.end_date:
-            return f"До {self.end_date.strftime('%d %B')}"
-        return "Бессрочная акция"
-    
 class ServiceSpecialOffer(models.Model):
     """Промежуточная модель для связи услуг и акций"""
     service = models.ForeignKey(ServiceType, on_delete=models.CASCADE, verbose_name="Услуга")

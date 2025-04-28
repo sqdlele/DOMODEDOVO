@@ -17,9 +17,9 @@ class AppointmentForm(forms.ModelForm):
             'required': 'Пожалуйста, выберите услугу',
         }
     )
-    
+
     phone = forms.CharField(
-        max_length=18, 
+        max_length=18,
         required=False,
         widget=forms.TextInput(
             attrs={
@@ -32,24 +32,24 @@ class AppointmentForm(forms.ModelForm):
 
     def __init__(self, *args, user=None, selected_service=None, **kwargs):
         super().__init__(*args, **kwargs)
-        
+
         # Если передана выбранная услуга, устанавливаем её как начальное значение
         if selected_service:
             self.initial['service_type'] = [selected_service.id]
             self.fields['service_type'].initial = [selected_service.id]
-        
+
         # Получаем текущую дату и время
         now = timezone.localtime()
         current_date = now.date()
         current_hour = now.hour
-        
+
         # Определяем рабочие часы в зависимости от дня недели
         def get_working_hours(date):
             weekday = date.weekday()
             if weekday >= 5:
                 return range(8, 19)  # До 19:00 в выходные
             return range(8, 21)  # До 21:00 в будние дни
-        
+
         # Получаем выбранную дату из формы или используем текущую
         selected_date = None
         if self.data.get('date'):
@@ -59,28 +59,28 @@ class AppointmentForm(forms.ModelForm):
                 selected_date = current_date
         else:
             selected_date = current_date
-        
+
         # Создаем список всех возможных времен в зависимости от дня недели
         working_hours = get_working_hours(selected_date)
-        
+
         # Если дата сегодняшняя, исключаем текущий и прошедшие часы
         if selected_date == current_date:
             working_hours = [h for h in working_hours if h > current_hour]
-        
+
         all_times = [(f'{i:02d}:00', f'{i:02d}:00') for i in working_hours]
-        
+
         # Получаем занятые времена
         try:
             booked_times = Appointment.objects.filter(
                 date=selected_date,
                 status__in=['pending', 'confirmed']
             ).values_list('time', flat=True)
-            
+
             # Преобразуем занятые времена в строковый формат
             booked_times_str = [t.strftime('%H:00') for t in booked_times]
-            
+
             # Фильтруем доступные времена
-            available_times = [(t, label) for t, label in all_times 
+            available_times = [(t, label) for t, label in all_times
                             if t not in booked_times_str]
         except:
             available_times = all_times
@@ -134,7 +134,7 @@ class AppointmentForm(forms.ModelForm):
     def clean_time(self):
         time_str = self.cleaned_data.get('time')
         date = self.cleaned_data.get('date')
-        
+
         if not time_str:
             raise ValidationError('Выберите время записи')
 
@@ -142,7 +142,7 @@ class AppointmentForm(forms.ModelForm):
             # Преобразуем строку времени в объект time
             hour = int(time_str.split(':')[0])
             appointment_time = time(hour=hour)
-            
+
             if date:
                 # Проверяем существующие записи
                 existing_appointment = Appointment.objects.filter(
@@ -150,24 +150,24 @@ class AppointmentForm(forms.ModelForm):
                     time=appointment_time,
                     status__in=['pending', 'confirmed']
                 ).exists()
-                
+
                 if existing_appointment:
                     raise ValidationError(
                         'Это время уже занято. Пожалуйста, выберите другое время.'
                     )
-                
+
                 # Проверяем текущее время
                 now = timezone.localtime()
-                
+
                 if date == now.date():
                     # Если выбранный час совпадает с текущим или меньше текущего
                     if hour <= now.hour:
                         raise ValidationError(
                             'На этот час уже нельзя записаться. Пожалуйста, выберите время на следующий час или позже.'
                         )
-            
+
             return appointment_time
-        
+
         except ValueError:
             raise ValidationError('Неверный формат времени')
 
@@ -177,8 +177,8 @@ class AppointmentForm(forms.ModelForm):
             raise ValidationError({'service_type': 'Пожалуйста, выберите услугу'})
         return cleaned_data
 
-    
-    
+
+
 class RegisterForm(UserCreationForm):
         username = forms.CharField(
             widget=forms.TextInput(
@@ -231,13 +231,13 @@ class RegisterForm(UserCreationForm):
             if username == '':
                 raise forms.ValidationError('Логин не может быть пустым', code='invalid')
             return username
-        
+
         def clean_email(self):
             email = self.cleaned_data['email']
             if email == '':
                 raise forms.ValidationError('Email не может быть пустым', code='invalid')
             return email
-        
+
         class Meta(UserCreationForm.Meta):
             fields = ("username", "email",  "password1", "password2",)
 
@@ -260,15 +260,15 @@ class LoginForm(AuthenticationForm):
             ),
     )
     error_messages = {
-        "invalid_login": "Неправильный логин или пароль", 
+        "invalid_login": "Неправильный логин или пароль",
     }
-    
+
     def clean_password(self):
         password = self.cleaned_data['password']
         if password == '':
             raise forms.ValidationError('Введите пароль', code='invalid')
         return password
-    
+
     def clean_username(self):
         username = self.cleaned_data['username']
         if username == '':
@@ -276,8 +276,8 @@ class LoginForm(AuthenticationForm):
         if not User.objects.filter(username=username):
             raise forms.ValidationError('Такого пользователя не существует', code='invalid')
         return username
-    
-    
+
+
 class ProfileForm(forms.ModelForm):
 
     phone = forms.CharField(
@@ -312,7 +312,7 @@ class ReviewForm(forms.ModelForm):
             'max_value': 'Оценка должна быть от 1 до 5',
         }
     )
-    
+
     comment = forms.CharField(
         widget=forms.Textarea(
             attrs={
@@ -343,7 +343,7 @@ class ReviewForm(forms.ModelForm):
         if not comment:
             raise forms.ValidationError('Пожалуйста, напишите отзыв')
         return comment
-        
+
 class NewsForm(forms.ModelForm):
     class Meta:
         model = News
@@ -360,69 +360,63 @@ class SpecialOfferForm(forms.ModelForm):
         queryset=ServiceType.objects.all(),
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
         label="Выберите услуги для акции",
-        required=False  # Делаем необязательным для обратной совместимости
+        required=False
+    )
+    discount_percent = forms.IntegerField(
+        label='Скидка (%)',
+        min_value=1, max_value=100,
+        required=True,
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Например, 10'})
     )
 
     class Meta:
         model = SpecialOffer
-        fields = ['title', 'content', 'image', 'end_date', 'is_one_time', 'price', 'is_active']
+        fields = [
+            'title', 'content', 'image', 'end_date',
+            'is_one_time', 'discount_percent', 'is_active', 'services'
+        ]
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
-            'end_date': forms.DateInput(attrs={
-                'class': 'form-control',
-                'type': 'date'
-            }),
-            'price': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
+            'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'is_one_time': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
+
+    def save(self, commit=True):
+        special_offer = super().save(commit=commit)
+        if commit and 'services' in self.cleaned_data:
+            special_offer.services.set(self.cleaned_data['services'])
+        return special_offer
 
     def clean(self):
         cleaned_data = super().clean()
         is_one_time = cleaned_data.get('is_one_time')
         end_date = cleaned_data.get('end_date')
-        services = cleaned_data.get('services', [])
-
         if not is_one_time and not end_date:
             raise forms.ValidationError(
                 "Необходимо указать дату окончания акции для неодноразового предложения"
             )
-        
         return cleaned_data
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         instance = kwargs.get('instance')
-        
-        # Если редактируем существующее предложение, отметим выбранные услуги
         if instance:
             self.fields['services'].initial = instance.services.all()
+            self.fields['discount_percent'].initial = getattr(instance, 'discount_percent', None)
 
     def save(self, commit=True):
         special_offer = super().save(commit=commit)
-        
         if commit:
-            # Сначала очищаем все связи
+            # очищаем все связи
             special_offer.services.clear()
-            
-            # Затем добавляем выбранные услуги
             services = self.cleaned_data.get('services', [])
             for service in services:
-                # Используем промежуточную модель для добавления связи
-                from .models import ServiceSpecialOffer
                 ServiceSpecialOffer.objects.create(
                     service=service,
                     special_offer=special_offer,
                     is_active=special_offer.is_active
                 )
-                
-                # Обновляем цены, если акция активна
-                if special_offer.is_active and special_offer.price:
-                    if not service.original_price:
-                        service.original_price = service.price
-                    service.price = special_offer.price
-                    service.save()
-        
         return special_offer

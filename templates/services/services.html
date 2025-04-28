@@ -1,72 +1,71 @@
+
 {% extends "services/service_base.html" %}
 
 {% block content %}
 <div class="services-container">
     <div class="search-container">
-        <input type="text" 
+        <input type="text"
                id="searchInput"
                class="search-input"
-               placeholder="Поиск услуг..." 
+               placeholder="Поиск услуг..."
                value="{{ query|default:'' }}"
                autocomplete="off">
     </div>
 
     <div id="searchResults">
-
         <div class="services-header">
-        <h2>{% if current_category %}{{ current_category }}{% else %}Наши услуги{% endif %}</h2>
-        <p class="service-description">
-            {% if current_category %}
-                {% if current_category == 'Ремонт' %}
-                    Профессиональный ремонт автомобилей любой сложности
-                {% elif current_category == 'Диагностика' %}
-                    Комплексная диагностика всех систем автомобиля
-                {% elif current_category == 'ТО' %}
-                    Техническое обслуживание автомобилей всех марок
+            <h2>{% if current_category %}{{ current_category }}{% else %}Наши услуги{% endif %}</h2>
+            <p class="service-description">
+                {% if current_category %}
+                    {% if current_category == 'Ремонт' %}
+                        Профессиональный ремонт автомобилей любой сложности
+                    {% elif current_category == 'Диагностика' %}
+                        Комплексная диагностика всех систем автомобиля
+                    {% elif current_category == 'ТО' %}
+                        Техническое обслуживание автомобилей всех марок
+                    {% endif %}
+                {% else %}
+                    Мы предлагаем широкий спектр услуг по обслуживанию и ремонту автомобилей
                 {% endif %}
-            {% else %}
-                Мы предлагаем широкий спектр услуг по обслуживанию и ремонту автомобилей
-            {% endif %}
-        </p>
-    </div>
+            </p>
+        </div>
 
-    <div class="services-categories">
-        {% for category, services in services_by_category.items %}
-            <div class="category-section" id="{{ category|lower }}">
-                <h2 class="category-title">{{ category }}</h2>
-                <div class="services-grid">
-                    {% for service in services %}
-                        <div class="service-card" id="{{ service.name|slugify }}">
-                            {% if service.image %}
-                                <div class="service-image" style="background-image: url('{{ service.image.url }}')"></div>
-                            {% endif %}
-                            <div class="service-content">
-                                <h3>{{ service.name }}</h3>
-                                <p>{{ service.description }}</p>
-                                <div class="service-footer">
-                                    <div class="service-price">
-                                        {% if service.special_offers.exists %}
-                                            <span class="original-price">{{ service.price }}₽</span>
-                                            <span class="special-price">{{ service.get_actual_price }}₽</span>
-                                        {% else %}
-                                            {{ service.price }} ₽
-                                        {% endif %}
+        <div class="services-categories">
+            {% for category, services in services_by_category.items %}
+                <div class="category-section" id="{{ category|lower }}">
+                    <h2 class="category-title">{{ category }}</h2>
+                    <div class="services-grid">
+                        {% for service in services %}
+                            <div class="service-card" id="{{ service.name|slugify }}">
+                                {% if service.image %}
+                                    <div class="service-image" style="background-image: url('{{ service.image.url }}')"></div>
+                                {% endif %}
+                                <div class="service-content">
+                                    <h3>{{ service.name }}</h3>
+                                    <p>{{ service.description }}</p>
+                                    <div class="service-footer">
+                                        <div class="service-price">
+                                            {% if service.discounted_price %}
+                                                <span class="original-price">{{ service.price }} ₽</span>
+                                                <span class="special-price">{{ service.discounted_price }} ₽</span>
+                                                <span class="discount-badge">-{{ service.get_discount_offer.discount_percent }}%</span>
+                                            {% else %}
+                                                <span class="regular-price">{{ service.price }} ₽</span>
+                                            {% endif %}
+                                        </div>
+                                        <form action="{% url 'make_appointment' %}" method="get">
+                                            <input type="hidden" name="service_id" value="{{ service.id }}">
+                                            <button type="submit" class="book-btn">Записаться</button>
+                                        </form>
                                     </div>
-
-                                    
-                                    <form action="{% url 'make_appointment' %}" method="get">
-                                        <input type="hidden" name="service_id" value="{{ service.id }}">
-                                        <button type="submit" class="book-btn">Записаться</button>
-                                    </form>
                                 </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
-</div>
 </div>
 
 <script>
@@ -76,31 +75,22 @@ const searchResults = document.getElementById('searchResults');
 
 searchInput.addEventListener('input', function(e) {
     clearTimeout(timer);
-    
-    // Добавляем небольшую задержку перед отправкой запроса
     timer = setTimeout(() => {
         const query = e.target.value.trim();
-        
-        // Создаем URL с параметром поиска
         const url = new URL(window.location.href);
         url.searchParams.set('search', query);
-        
-        // Отправляем AJAX запрос
         fetch(url)
             .then(response => response.text())
             .then(html => {
-                // Создаем временный элемент для парсинга HTML
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
-                
-                // Обновляем только содержимое результатов поиска
                 const newResults = doc.getElementById('searchResults');
                 if (newResults) {
                     searchResults.innerHTML = newResults.innerHTML;
                 }
             })
             .catch(error => console.error('Ошибка:', error));
-    }, 300); // Задержка в 300 мс
+    }, 300);
 });
 </script>
 
@@ -125,7 +115,6 @@ searchInput.addEventListener('input', function(e) {
     border-color: #4a90e2;
 }
 
-/* Добавляем анимацию для плавного появления результатов */
 .services-categories {
     animation: fadeIn 0.3s ease-in-out;
 }
@@ -139,6 +128,47 @@ searchInput.addEventListener('input', function(e) {
         opacity: 1;
         transform: translateY(0);
     }
+}
+.service-price {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: white;
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+.special-price {
+    color: #d32f2f;
+    font-size: 22px;
+    font-weight: bold;
+    margin-right: 6px;
+}
+
+.discount-badge {
+    background: #ffd600;
+    color: #d32f2f;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 2px 10px;
+    margin-left: 5px;
+    border: 1px solid #ffe082;
+    box-shadow: 0 1px 2px rgba(220,196,0,0.07);
+    letter-spacing: 0.5px;
+    display: inline-block;
+}
+
+.regular-price {
+    color: white;
+    font-weight: 500;
 }
 </style>
 {% endblock %}

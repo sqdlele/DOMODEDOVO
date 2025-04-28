@@ -4,6 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="static/img/favicon.ico">
     <link rel="stylesheet" href="{% static 'style.css' %}" />
     <link rel="stylesheet" href="{% static 'css/news.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
@@ -86,10 +87,10 @@
           document.addEventListener("DOMContentLoaded", function () {
             const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
             const nav = document.querySelector("nav");
-        
+
             mobileMenuBtn.addEventListener("click", function () {
                 nav.classList.toggle("active");
-                
+
                 // Анимация иконки меню
                 if (nav.classList.contains("active")) {
                     // Анимация закрытия
@@ -101,7 +102,7 @@
                     this.textContent = "☰";
                 }
             });
-        
+
             // Закрывать меню при клике на пункт меню
             document.querySelectorAll(".links-container a").forEach((link) => {
                 link.addEventListener("click", () => {
@@ -264,7 +265,7 @@
               chatPanel.style.display = "none";
             }
           } else {
-            console.log("Chat panel not found!"); 
+            console.log("Chat panel not found!");
           }
         });
       }

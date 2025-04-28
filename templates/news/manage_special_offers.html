@@ -4,13 +4,13 @@
 {% block content %}
 <div class="management-container">
     <h2 class="management-title">Управление спецпредложениями</h2>
-    
+
     <!-- Форма добавления спецпредложения -->
     <div class="form-card">
         <h4>Добавить спецпредложение</h4>
         <form method="post" enctype="multipart/form-data" class="management-form">
             {% csrf_token %}
-            
+
             <!-- Основные поля -->
             <div class="form-group1">
                 <label for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
@@ -41,10 +41,10 @@
             <!-- Цена и дата окончания -->
             <div class="form-row">
                 <div class="form-group1">
-                    <label for="{{ form.price.id_for_label }}">{{ form.price.label }}</label>
-                    {{ form.price }}
-                    {% if form.price.errors %}
-                        <div class="error-message">{{ form.price.errors }}</div>
+                    <label for="{{ form.discount_percent.id_for_label }}">{{ form.discount_percent.label }}</label>
+                    {{ form.discount_percent }}
+                    {% if form.discount_percent.errors %}
+                        <div class="error-message">{{ form.discount_percent.errors }}</div>
                     {% endif %}
                 </div>
 
@@ -57,7 +57,7 @@
                 </div>
             </div>
 
-            <!-- Чекбоксы -->
+             <!-- Чекбоксы -->
             <div class="form-group1">
                 <div class="checkbox-group">
                     <label for="{{ form.is_one_time.id_for_label }}">
@@ -81,7 +81,7 @@
                     <div class="error-message">{{ form.is_active.errors }}</div>
                 {% endif %}
             </div>
-            
+
             <!-- Выбор услуг для акции -->
             <div class="form-group1">
                 <label for="{{ form.services.id_for_label }}">{{ form.services.label }}</label>
@@ -100,8 +100,9 @@
                 {% endif %}
             </div>
 
-            <button type="submit">Добавить спецпредложение</button>
+            <button class="bttn" type="submit"><span>Добавить спецпредложение</span></button>
         </form>
+
     </div>
 
     <!-- Список существующих спецпредложений -->
@@ -110,7 +111,7 @@
             <thead>
                 <tr>
                     <th>Заголовок</th>
-                    <th>Цена</th>
+                    <th>Скидка</th>
                     <th>Период</th>
                     <th>Статус</th>
                     <th>Услуги</th>
@@ -121,7 +122,11 @@
                 {% for offer in offers %}
                 <tr>
                     <td>{{ offer.title }}</td>
-                    <td>{% if offer.price %}{{ offer.price }} ₽{% else %}-{% endif %}</td>
+                    <td>{% if offer.discount_percent %}
+        -{{ offer.discount_percent }}%
+    {% else %}
+        -
+    {% endif %}</td>
                     <td>
                         {% if offer.is_one_time %}
                             Одноразовое предложение
@@ -157,8 +162,24 @@
         </table>
     </div>
 </div>
-
+</div>
 <style>
+.bttn {
+        padding: 10px;
+        border: 1px solid #F18230;
+        border-radius: 6px;
+        font-weight: 500;
+        color: #black;
+        background-color: ##F18230;
+
+    }
+    .bttn:focus-visible {
+        box-shadow: 0 0 0 3px lightskyblue;
+    }
+    .bttn:disabled {
+        opacity: 0.65;
+        pointer-events: none;
+    }
     .services-selection {
         max-height: 200px;
         overflow-y: auto;
@@ -166,7 +187,7 @@
         padding: 10px;
         margin-top: 5px;
     }
-    
+
     .service-badge {
         display: inline-block;
         background-color: #e1f5fe;
@@ -177,19 +198,19 @@
         margin-right: 5px;
         margin-bottom: 5px;
     }
-    
+
     .no-services {
         color: #757575;
         font-style: italic;
     }
-    
+
     .image-preview {
         display: none;
         max-width: 100%;
         max-height: 200px;
         margin-top: 10px;
     }
-    
+
     .image-preview.show {
         display: block;
     }
@@ -200,7 +221,7 @@
     document.querySelector('input[type="file"]').addEventListener('change', function(e) {
         const preview = document.getElementById('imagePreview');
         const file = e.target.files[0];
-        
+
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -226,7 +247,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         const oneTimeCheckbox = document.getElementById('{{ form.is_one_time.id_for_label }}');
         const endDateField = document.getElementById('{{ form.end_date.id_for_label }}');
-        
+
         if (oneTimeCheckbox && oneTimeCheckbox.checked) {
             endDateField.disabled = true;
         }

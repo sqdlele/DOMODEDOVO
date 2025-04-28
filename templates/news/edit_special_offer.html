@@ -1,0 +1,170 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+<div class="management-container">
+    <h2 class="management-title">Редактировать спецпредложение</h2>
+    <div class="form-card">
+        <form method="post" enctype="multipart/form-data" class="management-form">
+            {% csrf_token %}
+
+            <div class="form-group1">
+                <label for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <div class="error-message">{{ form.title.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group1">
+                <label for="{{ form.content.id_for_label }}">{{ form.content.label }}</label>
+                {{ form.content }}
+                {% if form.content.errors %}
+                    <div class="error-message">{{ form.content.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group1">
+                <label for="{{ form.image.id_for_label }}">{{ form.image.label }}</label>
+                {{ form.image }}
+                {% if form.image.errors %}
+                    <div class="error-message">{{ form.image.errors }}</div>
+                {% endif %}
+                {% if offer.image %}
+                    <img src="{{ offer.image.url }}" alt="Текущее изображение" class="image-preview show" style="margin-top: 15px;">
+                {% endif %}
+                <img id="imagePreview" class="image-preview" src="#" alt="Предпросмотр изображения">
+            </div>
+            <div class="form-row">
+                <div class="form-group1">
+                    <label for="{{ form.price.id_for_label }}">{{ form.price.label }}</label>
+                    {{ form.price }}
+                    {% if form.price.errors %}
+                        <div class="error-message">{{ form.price.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-group1">
+                    <label for="{{ form.end_date.id_for_label }}">{{ form.end_date.label }}</label>
+                    {{ form.end_date }}
+                    {% if form.end_date.errors %}
+                        <div class="error-message">{{ form.end_date.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group1">
+                <div class="checkbox-group">
+                    <label for="{{ form.is_one_time.id_for_label }}">
+                        {{ form.is_one_time }}
+                        {{ form.is_one_time.label }}
+                    </label>
+                </div>
+                {% if form.is_one_time.errors %}
+                    <div class="error-message">{{ form.is_one_time.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group1">
+                <div class="checkbox-group">
+                    <label for="{{ form.is_active.id_for_label }}">
+                        {{ form.is_active }}
+                        {{ form.is_active.label }}
+                    </label>
+                </div>
+                {% if form.is_active.errors %}
+                    <div class="error-message">{{ form.is_active.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group1">
+                <label for="{{ form.services.id_for_label }}">{{ form.services.label }}</label>
+                <div class="services-selection">
+                    {% for service in form.services %}
+                    <div class="checkbox-group">
+                        {{ service.tag }}
+                        <label for="{{ service.id_for_label }}">
+                            {{ service.choice_label }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% if form.services.errors %}
+                    <div class="error-message">{{ form.services.errors }}</div>
+                {% endif %}
+            </div>
+            <button type="submit">Сохранить изменения</button>
+        </form>
+    </div>
+</div>
+<style>
+    .form-card {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 16px #e3e7ee;
+        padding: 30px;
+        margin: 35px auto 20px auto;
+        max-width: 500px;
+    }
+    .image-preview {
+        display:none;
+        max-width:100%;
+        max-height:200px;
+        margin-top:12px;
+    }
+    .image-preview.show {
+        display:block;
+    }
+    .error-message {
+        color: #c62828;
+        font-size: 0.95em;
+        margin-top:6px;
+    }
+    .form-group1 { margin-bottom:18px; }
+    .form-row { display:flex; gap:18px;}
+    .checkbox-group { margin-right: 10px;}
+    button[type="submit"] {
+        background: #1976d2;
+        color: #fff;
+        border: none;
+        border-radius: 7px;
+        padding: 7px 22px;
+        margin-top: 8px;
+        font-size: 1em;
+        font-weight: 500;
+        cursor: pointer;
+    }
+    button[type="submit"]:hover {
+        background: #0d4680;
+    }
+</style>
+<script>
+    // Предпросмотр изображения
+    document.addEventListener('DOMContentLoaded', function(){
+        let inputFile = document.querySelector('input[type="file"]');
+        if(inputFile) {
+            inputFile.addEventListener('change', function(e) {
+                const preview = document.getElementById('imagePreview');
+                const file = e.target.files[0];
+                if(file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        preview.classList.add('show');
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+        // Обработка одноразового предложения
+        const oneTimeCheckbox = document.getElementById('{{ form.is_one_time.id_for_label }}');
+        const endDateField = document.getElementById('{{ form.end_date.id_for_label }}');
+        if(oneTimeCheckbox && endDateField){
+            oneTimeCheckbox.addEventListener('change', function(e) {
+                if (this.checked) {
+                    endDateField.value = '';
+                    endDateField.disabled = true;
+                } else {
+                    endDateField.disabled = false;
+                }
+            });
+            if (oneTimeCheckbox.checked) {
+                endDateField.disabled = true;
+            }
+        }
+    });
+</script>
+{% endblock %}

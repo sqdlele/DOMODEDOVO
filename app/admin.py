@@ -2,6 +2,11 @@ from django.contrib import admin
 from django.utils.html import format_html
 from .models import Profile, ServiceType, ServiceRecord, Appointment, Image, Review, SpecialOffer, News
 
+
+admin.site.site_title = "Администрирование DOMODEDOVO"
+admin.site.site_header = "Администрирование сайта DOMODEDOVO"
+admin.site.index_title = "Панель управления DOMODEDOVO"
+
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('user', 'get_appointment_info', 'rating', 'short_comment', 'created_at')
@@ -9,7 +14,7 @@ class ReviewAdmin(admin.ModelAdmin):
     search_fields = ('user__username', 'comment', 'appointment__service_type__name')
     readonly_fields = ('created_at',)
     raw_id_fields = ('user', 'appointment')
-    
+
     def short_comment(self, obj):
         """Возвращает сокращенную версию комментария"""
         return obj.comment[:50] + '...' if len(obj.comment) > 50 else obj.comment
@@ -48,7 +53,7 @@ class ServiceTypeAdmin(admin.ModelAdmin):
     list_display = ('name', 'category', 'price', 'get_description')
     search_fields = ('name', 'description')
     list_filter = ('category', 'price')
-    
+
     def get_description(self, obj):
         return obj.description[:100] + '...' if len(obj.description) > 100 else obj.description
     get_description.short_description = 'Описание'
@@ -59,7 +64,7 @@ class ServiceRecordAdmin(admin.ModelAdmin):
     list_filter = ('status', 'date', 'service_type')
     search_fields = ('description',)
     date_hierarchy = 'date'
-    
+
     fieldsets = (
         ('Основная информация', {
             'fields': ('service_type', 'date', 'status')
@@ -76,10 +81,10 @@ class AppointmentAdmin(admin.ModelAdmin):
     search_fields = ('user__username', 'notes')
     date_hierarchy = 'date'
     filter_horizontal = ('service_type',)
-    
+
     fieldsets = (
         ('Клиент', {
-            'fields': ('user',)  
+            'fields': ('user',)
         }),
         ('Информация о записи', {
             'fields': ('service_type', 'date', 'time', 'status')
@@ -88,11 +93,11 @@ class AppointmentAdmin(admin.ModelAdmin):
             'fields': ('notes',)
         }),
     )
-    
+
     def get_services(self, obj):
         return ", ".join([service.name for service in obj.service_type.all()])
     get_services.short_description = 'Услуги'
-    
+
     def get_readonly_fields(self, request, obj=None):
         if obj:
             return ('created_at',)
@@ -101,11 +106,11 @@ class AppointmentAdmin(admin.ModelAdmin):
 @admin.register(Image)
 class AdminImage(admin.ModelAdmin):
     list_display = ('id', 'image_preview')
-    
+
     def image_preview(self, obj):
         return format_html('<img src="{}" width="100" height="100" />', obj.image.url)
     image_preview.short_description = 'Предпросмотр'
-    
+
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
     list_display = ('title', 'date', 'is_active')
@@ -116,7 +121,7 @@ class NewsAdmin(admin.ModelAdmin):
 
 @admin.register(SpecialOffer)
 class SpecialOfferAdmin(admin.ModelAdmin):
-    list_display = ('title', 'end_date', 'is_one_time', 'is_active', 'price')
+    list_display = ('title', 'end_date', 'is_one_time', 'is_active', 'discount_percent')
     list_filter = ('is_active', 'is_one_time', 'created_at')
     search_fields = ('title', 'content')
     date_hierarchy = 'created_at'
